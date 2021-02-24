@@ -1,3 +1,6 @@
+const PENDING = 'PENDING';
+const FULFILLED = 'FULFILLED';
+const REJECTED = 'REJECTED';
 const resolvePromise = (pm, x, resolve, reject) => {
   // 如果是相同的引用则抛出错误
   if (pm === x) {
@@ -37,7 +40,7 @@ const resolvePromise = (pm, x, resolve, reject) => {
 class MyPromise {
   constructor(fn) {
     // 1. 本身的状态，有3个 pending, fulfilled, rejected, pending且可以转为fulfilled，rejected
-    this.state = 'pending';
+    this.state = PENDING;
     this.value = undefined;
     this.reason = undefined;
     // ! 处理传入异步任务时对回调函数的存储
@@ -47,16 +50,16 @@ class MyPromise {
   // 3. resolve,reject 方法
   let resolve = x => {
     // 当状态转换时不能变更
-    if (this.state === 'pending') {
-      this.state = 'fulfilled';
+    if (this.state === PENDING) {
+      this.state = FULFILLED;
       this.value = x;
       // ! 对存储进来的回调进行遍历
       this.onResolvedCallbacks.forEach(fn => fn())
     }
   }
   let reject = err => {
-    if (this.state === 'pending') {
-      this.state = 'rejected';
+    if (this.state === PENDING) {
+      this.state = REJECTED;
       this.reason = err;
       this.onRejectedCallbacks.forEach(fn => fn())
     }
@@ -71,55 +74,63 @@ class MyPromise {
   // 2.1. 两个参数
   then(onFulfilled, onRejected) {
     // ! 如果参数不是函数的情况，
-    onFulfilled = onFulfilled instanceof Function ? onFulfilled : v => v;
+    onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : v => v;
     // ! 这里抛出错误给后面的then 捕获到
-    onRejected = onRejected instanceof Function ? onRejected : err => { throw err; }
+    onRejected = typeof onRejected === 'function' ? onRejected : err => { throw err; }
     let promise2 = new MyPromise((resolve, reject) => {
-      try {
-        if (this.state === 'pending') {
+        if (this.state === PENDING) {
           this.onResolvedCallbacks.push(() => {
-            setTimeout(() => {
               try {
                 let x = onFulfilled(this.value);
                 resolvePromise(promise2, x, resolve, reject);
               } catch (e) {
                 reject(e)
               }
-            }, 0);
           });
 
           this.onRejectedCallbacks.push(()=> {
-            setTimeout(() => {
               try {
                 let x = onRejected(this.reason);
                 resolvePromise(promise2, x, resolve, reject)
               } catch (e) {
                 reject(e)
               }
-            }, 0);
           });
         } else {
-            let x = this.state === 'fulfilled' ? onFulfilled(this.value) : onRejected(this.reason)
+          try {
+            let x = this.state === FULFILLED ? onFulfilled(this.value) : onRejected(this.reason)
             resolvePromise(promise2, x, resolve, reject);
+          } catch (err) {
+            reject(err)
+          }
         }
-      } catch (e) {
-        reject(e);
-      }
     });
     // 返回的是一个新的promise
     return promise2;
   }
 }
 
-new MyPromise((resolve, reject) => {
-  setTimeout(() => {
-    resolve(123)
-  }, 1000)
-}).then(pro => {
-  console.log('pro' + pro);
-  return pro;
-}).then(x => {
-  console.log(x)
-}, err => {
-    console.log('err' + err)
-})
+MyPromise.defer = MyPromise.deferred = function () {
+  let dfd = {};
+  dfd.promise = new MyPromise((resolve,reject)=>{
+      dfd.resolve = resolve;
+      dfd.reject = reject;
+  })
+  return dfd;
+}
+
+// new MyPromise((resolve, reject) => {
+//   setTimeout(() => {
+//     console.log(3213)
+//     resolve(231)
+//   }, 1000)
+// }).then().then(x => {
+//   console.log(x)
+//   return x
+// }).then(x => {
+//   console.log(x)
+// },x => {
+//   console.log(x)
+// })
+
+module.exports = MyPromise;
