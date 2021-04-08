@@ -30,6 +30,31 @@ var maxArea = function(height) {
   return max;
 };
 
-console.log(maxArea([1,8,6,2,5,4,8,3,7]))
+// var maxArea = function (arr) {
+//   // 两边夹逼
+//   let sum = 0;
+//   // 1. 两边往中间夹逼
+//   for (let i = 0, j = arr.length - 1; i < j;) {
+//     // 2. 两边所得得大小与之前的进行比较；
+//     let temp = Math.min(arr[i], arr[j]) * (j - i);
+//     sum = sum > temp ? sum : temp;
+//     // 3. 比较两边的大小，小的往中间夹
+//     arr[i] > arr[j] ? j-- : i++;
+//   }
+//   return sum
+// }
+
+var maxArea1 = (arr) => {
+  let sum = 0;
+  for (let x = 0, y = arr.length - 1; x < y;) {
+    let res = Math.min(arr[x], arr[y]) * (y - x);
+    sum = Math.max(res, sum);
+    arr[x] > arr[y] ? y-- : x++;
+  }
+  return sum;
+}
+
+
+console.log(maxArea1([1,8,6,2,5,4,8,3,7]))
 // @lc code=end
 

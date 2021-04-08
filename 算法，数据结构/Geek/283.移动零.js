@@ -17,10 +17,37 @@ var moveZeroes = function(nums) {
     if (nums[temp] === 0) {
       nums.splice(temp, 1);
       nums[nums.length] = 0;
-      console.log(nums)
     } else {
       temp++
     }
   }
 };
+
+var moveZeroes1 = function (arr) {
+  let next = 0;
+  for (let i = 0; i < arr.length;i++) {
+    if (arr[next] === 0) {
+      arr.splice(next, 1);
+      arr[arr.length] = 0;
+    } else {
+      next++;
+    }
+  }
+  return arr;
+}
+
+var moveZeroes2 = (arr) => {
+  var temp = 0;
+  for (let i = 0; i < arr.length; i++) {
+    if (!arr[temp]) {
+      arr.splice(temp, 1);
+      arr.push(0);
+    } else {
+      temp++
+    }
+  }
+  return arr;
+}
+
+console.log(moveZeroes2([0,0,0,1,0,3,12]))
 // @lc code=end
