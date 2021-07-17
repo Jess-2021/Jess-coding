@@ -1,3 +1,5 @@
+// 查找原型链上是否有构造函数的原型
+
 function newInstanceOf(left, right) {
   let instanceProto = left.__proto__
   let constructor = right.prototype
