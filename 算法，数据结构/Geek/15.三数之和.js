@@ -59,6 +59,30 @@ var threeSum = function (nums) {
     }
     return res;
 };
-console.log(threeSum([-2, 0, 3, -1, 4, 0, 3, 4, 1, 1, 1, -3, -5, 4, 0]));
+
+var threeSum3 = function (num) {
+    let res = []
+    if (num.length < 3) return []
+    num.sort((a, b) => a - b)
+    for (let i = 0;i < num.length - 1; i++) {
+        if (i > 0 && num[i - 1] === num[i])
+            continue;
+        for (let x = i + 1, y = num.length - 1; x < y;) {
+            let sum = num[x] + num[y] + num[i]
+            if (sum === 0) {
+                res.push([num[x], num[y], num[i]])
+                while(num[y] === num[y - 1]) y--;
+                x++;
+                y--;
+            }
+            else if (sum > 0) y--;
+            else if (sum < 0) x++;
+        }
+    }
+    return res
+}
+
+console.log(threeSum3([-2, 0, 3, -1, 4, 0, 3, 4, 1, 1, 1, -3, -5, 4, 0]));
+// console.log(threeSum3([-4, -1, -1, 2, 5, 5, 5]));
 // @lc code=end
 //# sourceMappingURL=15.三数之和.js.map
