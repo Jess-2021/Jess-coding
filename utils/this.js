@@ -47,7 +47,7 @@ Function.prototype.myBind = function(context) {
   function FNOP () {}
   function returnFn() {
     const args = midArg.concat([...arguments]) // 函数柯里化
-    const that = this instanceof context ? this : context // 构造调用时发生在bind函数执行之前，所以this已经指向了实例
+    const that = this instanceof FNOP ? this : context // 构造调用时发生在bind函数执行之前，所以this已经指向了实例
 
     return self.apply(that, args)
   }
@@ -57,11 +57,38 @@ Function.prototype.myBind = function(context) {
   return returnFn
 }
 
+Function.prototype.myBind1 = function(context) {
+  if (typeof this !== 'function') {
+    throw new Error('this不是个函数不可调用')
+  }
+  const initArgs = [].slice.call(arguments, 1)
+  const self = this
+
+  function FNOP() {}
+  function returnFn() {
+    const args = initArgs.concat([...arguments])
+    const that = this instanceof FNOP ? this : context // 👎 不是构造调用指向新的context
+
+    return self.apply(that, args)
+  }
+  // 构造函数指向构造函数原型
+  // __proto__指向原型
+  FNOP.prototype = self.prototype // 👎context， bind改变的只是改变this指向，并不改变调用者的原型
+  returnFn.prototype = new FNOP()
+
+  return returnFn
+}
+
+
+// text 构造调用
 var value = 2
 var foo = {
   value: 1
 }
-function fn() {
-  console.log(this.value)
+function Fn(age) {
+  this.age = age
+  console.log(this.age, this.value)
 }
-fn.myCall(foo)
+var FNOP = Fn.myBind1(foo, 18)
+
+console.log(new FNOP())
