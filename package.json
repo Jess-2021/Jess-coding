@@ -1,0 +1,19 @@
+{
+  "name": "jar-learn",
+  "version": "1.0.0",
+  "description": "自己学习时的一些小笔记。:blue_heart:",
+  "main": "promise.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/JararvisQ/Jar-learn.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/JararvisQ/Jar-learn/issues"
+  },
+  "homepage": "https://github.com/JararvisQ/Jar-learn#readme"
+}
