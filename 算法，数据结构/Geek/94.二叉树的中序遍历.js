@@ -39,3 +39,19 @@ var inorderTraversal = function(root) {
 };
 // @lc code=end
 
+var inorderTraversal = function(root) {
+  let res = []
+  let stack = []
+  let cur = root
+  while(stack.length || cur) {
+    if (cur) {
+      stack.push(cur)
+      cur = cur.left
+    } else {
+      cur = stack.pop()
+      res.push(cur.val)
+      cur = cur.right
+    }
+  }
+  return res
+} 
