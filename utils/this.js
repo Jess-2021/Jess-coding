@@ -4,11 +4,19 @@
  */
 Function.prototype.myCall = function(content) {
   var content = content || window // 避免传入null的情况
-  content[Symbol('fn')] = this
+  content.fn = this
 
-  const res = content[Symbol('fn')]([...arguments].slice(1))
-  delete content[Symbol('fn')]
+  const res = content.fn([...arguments].slice(1))
+  delete content.fn
   return res // 有返回的值
+}
+
+Function.prototype.myCall = function(content) {
+  let content = [].shift.call(arguments) || window
+  content.fn = this
+  let res = content.fn(arguments)
+  delete content.fn
+  return res
 }
 
 /**
@@ -17,15 +25,16 @@ Function.prototype.myCall = function(content) {
  * 接受一个数组参数
  */
 Function.prototype.myApply = function(context, arr) {
-  var context = context || window
-  context[Symbol('fn')] = this
-  const res = ''
-  if (!arr) {
-    res = context[Symbol('fn')]()
+  let context = context || arr
+  context.fn = this
+  let res = null
+  if (arr instanceof Array) {
+    res = context.fn([...arguments].slice(1))
   } else {
-    res = context[Symbol('fn')]([...arguments].slice(1))
+    delete context.fn
+    throw new Error('TypeError')
   }
-  delete content[Symbol('fn')]
+  delete context.fn
   return res
 }
 
@@ -40,7 +49,7 @@ Function.prototype.myBind = function(context) {
   if (typeof this !== "function") {
     throw new Error("Function.prototype.bind - what is trying to be bound is not callable");
   }
-  
+
   let self = this // 原本的this为调用bind函数时的this
   let midArg = [].slice.call(arguments, 1)
 
@@ -77,6 +86,24 @@ Function.prototype.myBind1 = function(context) {
   returnFn.prototype = new FNOP()
 
   return returnFn
+}
+
+Function.prototype.myBind = function(context) {
+  if (typeof context !== 'function') {
+    throw new Error('TypeError')
+  }
+  let self = this
+  let args = [].slice.call(arguments, 1)
+
+  function FNOP() {}
+  function binder() {
+    let _arg = args.slice(0).concat([].slice.call(arguments))
+    self.apply(this instanceof content ? self : content, _arg) // 🐷FNOP
+  }
+  FNOP.prototype = self.prototype
+  binder.prototype = new FNOP()
+
+  return binder
 }
 
 

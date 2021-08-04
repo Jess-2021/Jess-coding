@@ -42,19 +42,19 @@ function throttle(fn, wait) {
     args = arguments
     let remain = wait - (now - previous) // 第一次执行后剩下的时间
 
-    if (!timer) { // 不需要最后回调时，这块不需要
-      timer = setTimeout(() => {
-        previous = +new Date()
-        timer = null
-        fn.apply(context, args)
-      }, remain)
-    } else if (remain < 0) { // 如果没有剩余时间了
+    if (remain < 0) { // 如果没有剩余时间了, 第一次时一定为负数
       if (timer) {
         clearTimeout(timer)
         timer = null
       }
       previous = +new Date()
       fn.apply(context, args)
+    } else if (!timer) { // 不需要最后回调时，这块不需要
+      timer = setTimeout(() => {
+        previous = +new Date()
+        timer = null
+        fn.apply(context, args)
+      }, remain)
     }
   }
 
@@ -65,6 +65,34 @@ function throttle(fn, wait) {
   }
 
   return throttled
+}
+
+function throttle(fn, wait) {
+  let previous = 0,timer
+
+  return function() {
+    let self = this
+    let now = +new Date()
+    let last = wait - (now - previous)
+    args = arguments  // 🐷
+
+    // if(wait < last) {
+    if(last < 0) {
+      if (timer) {
+        clearTimeout(timer)
+        timer = null
+      }
+      previous = +new Date()
+      fn.apply(self, args)
+    } else if (!timer) {
+      timer = setTimeout(function() {
+        // clearTimeout(timer) // 🐷
+        previous = +new Date()
+        timer = null
+        fn.apply(self, args)
+      }, last) // 🐷
+    }
+  }
 }
 
 var count = 1;

@@ -14,6 +14,19 @@ function debounce(fn, wait) {
   }
 }
 
+function debounce(fn, wait) {
+  let timer = null
+  
+  return function() {
+    let self = this // 🐷
+    let args = arguments
+    clearTimeout(timer) // 🐷
+    timer = setTimeout(function() {
+      fn.apply(self, args)
+    }, wait)
+  }
+}
+
 var count = 1;
 var container = document.getElementById('container');
 

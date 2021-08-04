@@ -15,4 +15,18 @@ function newInstanceOf(left, right) {
   }
 }
 
+function newInstanceOf(left, right) {
+  let instance = left.__proto__
+  let Constructor = right.prototype
+
+  while(instance) {
+    if (instance !== Constructor) {
+      instance = instance.__proto__
+    } else {
+      return true
+    }
+  }
+  return false
+}
+
 console.log(newInstanceOf(Symbol(3243), Object))
