@@ -54,4 +54,24 @@ var inorderTraversal = function(root) {
     }
   }
   return res
-} 
+}
+
+// 先深层遍历，尽头后出栈一个，继续下一个的遍历
+var inorderTraversal = function(root) {
+  let res = []
+  if (!root) return res
+  let stack = []
+  let node = root
+  while(stack.length || node) {
+    if (node) {
+      stack.push(node)
+      node = node.left
+    } else {
+      node = stack.pop() // 拿到该节点继续找到右节点
+      res.push(node.val)
+      node = node.right
+    }
+  }
+
+  return res
+}
