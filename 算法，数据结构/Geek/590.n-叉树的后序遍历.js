@@ -21,7 +21,6 @@ var postorder = function(root) {
   let res = []
 
   function recursion(root) {
-    let parent = root
     let cur = root
     while (cur.val) {
       if (cur.children) {
@@ -36,5 +35,33 @@ var postorder = function(root) {
 
   return res
 };
+
+// 递归
+const postorder = function(root) {
+  let res = []
+  if (!root) return res
+  const recursion = function(node) {
+    if (node.children) {
+      for(let i = 0; i < node.children.length; i++) {
+        recursion(node.children[i])
+      }
+    }
+    res.push(node.val)
+  }
+  recursion(root)
+  return res
+}
+
+// 迭代
+const postorder = function(root) {
+  let res = [], stack = [root]
+  while(stack.length) {
+    let node = stack.pop()
+    if (!node) continue // 如果为null的情况
+    res.push(node.val)
+    stack.push(...node.children)
+  }
+  return res.reverse()
+}
 // @lc code=end
 
