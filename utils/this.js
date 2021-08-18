@@ -82,7 +82,7 @@ Function.prototype.myBind1 = function(context) {
   }
   // 构造函数指向构造函数原型
   // __proto__指向原型
-  FNOP.prototype = self.prototype // 👎context， bind改变的只是改变this指向，并不改变调用者的原型
+  FNOP.prototype = self.prototype // 👎context， bind改变的只是改变this指向，并不改变调用者的原型，所以应该是「最初调用bind的对象」
   returnFn.prototype = new FNOP()
 
   return returnFn
@@ -106,6 +106,24 @@ Function.prototype.myBind = function(context) {
   return binder
 }
 
+Function.prototype.myBind = function(context) {
+  if (typeof this !== 'function') {
+    throw new Error('TypeError')
+  }
+  let args = [].slice.call(arguments, 1)
+  let self = this
+  
+  function FNOP() {}
+  function returnFn() {
+    let finArgs = args.concat([...arguments])
+
+    return self.apply(this instanceof FNOP ? this : context, finArgs)
+  }
+  FNOP.prototype = context.prototype
+  returnFn.prototype = new FNOP()
+
+  return returnFn
+}
 
 // text 构造调用
 var value = 2

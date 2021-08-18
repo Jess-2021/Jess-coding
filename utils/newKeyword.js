@@ -18,6 +18,14 @@ function newKeyword(Parent) {
   return typeof res === 'object' ? res : obj
 }
 
+function newKeyword(Parent) {
+  let obj = {}
+  Constructor = [].shift.call(arguments) // 已经将第一个参数取出来🐷
+  obj.__proto__ = Constructor.prototype
+  let result = Constructor.apply(obj, arguments)
+  return typeof result === 'object' ? result : obj
+}
+
 function People(name, age) {
   this.name = name
   this.age = age
