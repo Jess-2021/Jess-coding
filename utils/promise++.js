@@ -1,4 +1,4 @@
-class Jromise {
+class Bromise {
   constructor(fn) {
     this.status = 'PENDING'
     this.value = ''
@@ -35,7 +35,7 @@ class Jromise {
     onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : () => onFulfilled
     onRejected = typeof onRejected === 'function' ? onRejected : (err) => {throw new Error(err)} // 🐖
 
-    let promise2 = new Jromise((resolve, reject) => { // 🐖
+    let promise2 = new Bromise((resolve, reject) => { // 🐖
       if (this.status === 'PENDING') {
         this.resolveCallbackList.push(() => // 🐖
           setTimeout(() => {
@@ -112,10 +112,86 @@ const resolveMidPromise = (promise, x, resolve, reject) => {
   }
 }
 
-const promise = new Jromise((resolve, reject) => {
-  reject('失败');
-}).then().then().then(data=>{
-  console.log(data);
-},err=>{
-  console.log('err',err);
+// const promise = new Bromise((resolve, reject) => {
+//   reject('失败');
+// }).then().then().then(data=>{
+//   console.log(data);
+// },err=>{
+//   console.log('err',err);
+// })
+
+
+Bromise.prototype.catch = function(reason) {
+  return this.then(_ => {}, reject => reject(reason))
+}
+
+Bromise.resolve = function(arg) {
+  if (arg instanceof Bromise) {
+    return arg
+  }
+  return new Bromise((resolve) => resolve(arg))
+}
+
+// Bromise.resolve(new Bromise((res, rej) => {
+//   setTimeout(() => {
+//     res(111)
+//   }, 1000)
+// })).then(data => console.log(data), err => console.log(err))
+
+Bromise.reject = function(reason) {
+  return new Promise().then(_, reject => reject(reason))
+}
+
+// finally会等待上一个promise执行完毕，再讲结果传到成功或者失败的promise里;
+// 如果传入的是promise，就等promise执行完毕
+Bromise.prototype.finally = function(callback) {
+  return this.then((value) => {
+    new Bromise.resolve(callback()).then(() => value) // 避免传入的是promise
+  }, reason => {
+    new Bromise.reject(callback()).then(() => { throw reason })
+  })
+}
+
+Bromise.all = (fns) => {
+  if (!Array.isArray(fns)) {throw new Error('TypeError')}
+  return new Bromise((resolve, reject) => {
+    let result = []
+    let count = 0
+    fns.forEach((fn, index) => {
+      count++
+      if (fn && typeof fn.then === 'function') {
+        fn.then(value => {
+          result[index] = value
+          if (count === fns.length) {
+            resolve(result)
+          }
+        }, reason => {
+          reject(reason)
+        })
+      } else {
+        result[index] = fn
+        if (count === fns.length) {
+          resolve(result)
+        }
+      }
+    })
+  })
+}
+
+let p1 = new Bromise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('ok1');
+  }, 1000);
+})
+
+let p2 = new Bromise((resolve, reject) => {
+  setTimeout(() => {
+    resolve('ok2');
+  }, 1000);
+})
+
+Bromise.all([1,2,3,p1,p2]).then(data => {
+  console.log('resolve', data);
+}, err => {
+  console.log('reject', err);
 })
