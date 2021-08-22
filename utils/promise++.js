@@ -33,7 +33,7 @@ class Bromise {
 
   then(onFulfilled, onRejected) {
     onFulfilled = typeof onFulfilled === 'function' ? onFulfilled : () => onFulfilled
-    onRejected = typeof onRejected === 'function' ? onRejected : (err) => {throw new Error(err)} // 🐖
+    onRejected = typeof onRejected === 'function' ? onRejected : (err) => {throw err} // 🐖
 
     let promise2 = new Bromise((resolve, reject) => { // 🐖
       if (this.status === 'PENDING') {
@@ -178,19 +178,82 @@ Bromise.all = (fns) => {
   })
 }
 
+Bromise.allSettled = (fns) => {
+  return new Bromise((resolve, reject) => {
+    if (fns.length === 0) return resolve(result);
+    let res = []
+    fns.forEach((fn, index) => {
+      if (fn && typeof fn.then === 'function') {
+        fn.then(value => {
+          res[index] = {
+            status: 'fulfilled',
+            value
+          }
+          if (res.length === fns.length) resolve(res)
+        }, reason => {
+          res[index] = {
+            status: 'rejected',
+            reason: reason.message
+          }
+          if (res.length === fns.length) resolve(res)
+        })
+      } else {
+        res[index] = {
+          status: 'fulfilled',
+          value: fn
+        }
+        if (res.length === fns.length) resolve(res)
+      }
+    })
+  })
+}
+
+Bromise.any = (fns) => {
+  return new Bromise((resolve, reject) => {
+    let res = []
+    if (fns.length === 0) reject(res)
+    fns.forEach((fn, index) => {
+      if (fn && typeof fn.then === 'function') {
+        fn.then(value => {
+          resolve(value)
+        }, reason => {
+          res[index] = reason
+          if (res.length === fns.length) reject('all promise were reject')
+        })
+      } else {
+        resolve(fn)
+      }
+    })
+  })
+}
+
+// 并没有中断方法
+Bromise.race = (fns) => {
+  return new Bromise((resolve, reject) => {
+    fns.forEach(fn => {
+      if (fns.length) return new Bromise()
+      if (fn && typeof fn.then === 'function') {
+        fn.then(resolve, reject)
+      } else {
+        resolve(fn)
+      }
+    })
+  })
+}
+
 let p1 = new Bromise((resolve, reject) => {
   setTimeout(() => {
-    resolve('ok1');
+    reject('ok1');
   }, 1000);
 })
 
 let p2 = new Bromise((resolve, reject) => {
   setTimeout(() => {
-    resolve('ok2');
+    reject('ok2');
   }, 1000);
 })
 
-Bromise.all([1,2,3,p1,p2]).then(data => {
+Bromise.race([]).then(data => {
   console.log('resolve', data);
 }, err => {
   console.log('reject', err);
