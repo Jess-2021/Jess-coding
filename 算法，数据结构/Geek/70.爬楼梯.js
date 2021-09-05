@@ -19,30 +19,24 @@ var climbStairs = function(n) {
   }
   return c;
 };
-
-var climbStairs = function(n) {
-  if (n <= 2) return n;
-  let a = 1, b = 2, c = 3;
-  for (let i = 3; i < n.length; i++) {
-    c = a + b;
-    a = b;
-    b = c;
-  }
-};
 // 计算机操作
 // if else, for, recursion
 // 找最近 重复子问题
 // @lc code=end
 
-var climbStairs2 = (n) => {
-  if (n <= 2) return n;
-  let a = 1, b = 2, c = 3;
-  for (let i = 3; i < n; i++) {
-    c = a + b;
-    a = b;
-    b = c;
+
+var climbStairs = function(n) {
+  if (n < 3) return n
+  let a = 3, b = 2, c = 1
+  for(let i = 3; i <= n; i++) {
+    a = b + c
+    c = b
+    b = a
   }
-  return c;
+  return a
 }
 
-console.log(climbStairs2(45))
+// c = b
+// b = a
+// 两个b对角线交换
+console.log(climbStairs(45))
