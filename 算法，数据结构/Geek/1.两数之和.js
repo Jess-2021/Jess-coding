@@ -33,17 +33,17 @@
 //   return arr;
 // };
 
-var twoSum = function (arr, target) {
-  let res = [];
-  for (let i = 0; i < arr.length - 1; i++) {
-    for (let j = i + 1; j < arr.length; j++) {
-      if (arr[i] + arr[j] === target) {
-        res = [i, j];
-      }
-    }
-  }
-  return res
-}
+// var twoSum = function (arr, target) {
+//   let res = [];
+//   for (let i = 0; i < arr.length - 1; i++) {
+//     for (let j = i + 1; j < arr.length; j++) {
+//       if (arr[i] + arr[j] === target) {
+//         res = [i, j];
+//       }
+//     }
+//   }
+//   return res
+// }
 
 var twoSum2 = function (arr, tag) {
   let res = [];
@@ -68,5 +68,19 @@ var twoSum3 = function (arr, target) {
   }
 }
 
-console.log(twoSum3([3,3], 6))
+function twoSum(arr, target) {
+  let map = new Map([[arr[0], 0]])
+  for(let i = 1;i < arr.length; i++) {
+    let found = map.get(target - arr[i])
+    if (found !== undefined) {
+      return [i, found]
+    } else {
+      map.set(arr[i], i)
+    }
+  }
+}
+// Map方法的操作：
+// new Map([[arr[0], 0]])
+
+console.log(twoSum([2,7,11,15], 9))
 // @lc code=end

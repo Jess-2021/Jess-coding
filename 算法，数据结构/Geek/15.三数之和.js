@@ -31,34 +31,34 @@
 //   }
 //   return res;
 // };
-var threeSum = function (nums) {
-    var res = [];
-    var len = nums.length;
-    if (len < 3)
-        return res;
-    nums.sort(function (a, b) { return a - b; });
-    for (var i = 0; i < len - 1; i++) {
-        if (i > 0 && nums[i - 1] === nums[i])
-            continue;
-        for (var x = i + 1, y = len - 1; x < y;) {
-            var sum = nums[i] + nums[x] + nums[y];
-            if (sum === 0) {
-                res.push([nums[i], nums[x], nums[y]]);
-                while (nums[x] === nums[x - 1])
-                    x++;
-                while (nums[y] === nums[y - 1])
-                    y--;
-                x++;
-                y--;
-            }
-            else if (sum > 0)
-                y--;
-            else if (sum < 0)
-                x++;
-        }
-    }
-    return res;
-};
+// var threeSum = function (nums) {
+//     var res = [];
+//     var len = nums.length;
+//     if (len < 3)
+//         return res;
+//     nums.sort(function (a, b) { return a - b; });
+//     for (var i = 0; i < len - 1; i++) {
+//         if (i > 0 && nums[i - 1] === nums[i])
+//             continue;
+//         for (var x = i + 1, y = len - 1; x < y;) {
+//             var sum = nums[i] + nums[x] + nums[y];
+//             if (sum === 0) {
+//                 res.push([nums[i], nums[x], nums[y]]);
+//                 while (nums[x] === nums[x - 1])
+//                     x++;
+//                 while (nums[y] === nums[y - 1])
+//                     y--;
+//                 x++;
+//                 y--;
+//             }
+//             else if (sum > 0)
+//                 y--;
+//             else if (sum < 0)
+//                 x++;
+//         }
+//     }
+//     return res;
+// };
 
 var threeSum3 = function (num) {
     let res = []
@@ -82,7 +82,30 @@ var threeSum3 = function (num) {
     return res
 }
 
-console.log(threeSum3([-2, 0, 3, -1, 4, 0, 3, 4, 1, 1, 1, -3, -5, 4, 0]));
+var threeSum = function(nums) {
+	let res = []
+	if (!nums || nums.length < 3) return res
+	nums.sort((a, b) => a-b)
+	for(let i = 0; i < nums.length - 1; i++) {
+		if (i > 0 && nums[i] === nums[i - 1]) continue
+		for(let j = i + 1, k = nums.length - 1; j < k;) {
+			let sum = nums[i] + nums[j] + nums[k]
+			if (sum === 0) {
+				res.push([nums[i], nums[j], nums[k]])
+				while(nums[k] === nums[k-1]) k--;
+				j++;
+				k--;
+			}
+			else if (sum > 0) k--;
+			else if (sum < 0) j++;
+		}
+	}
+	return res
+}
+
+// 1. 排序后跳过相同的数：while(nums[k] === nums[k-1]) k--;
+
+console.log(threeSum([-2, 0, 3, -1, 4, 0, 3, 4, 1, 1, 1, -3, -5, 4, 0]));
 // console.log(threeSum3([-4, -1, -1, 2, 5, 5, 5]));
 // @lc code=end
 //# sourceMappingURL=15.三数之和.js.map
