@@ -26,5 +26,19 @@ var reverseList = function(head) {
   }
   return prev
 };
+
+var reverseList = function(head) {
+  let current = head, prev = null
+  while(current) {
+    const next = current.next
+    current.next = prev
+    prev = current
+    current = next
+  }
+  return prev
+}
+
+// 类似于数的交换爬楼梯
+
 // @lc code=end
 

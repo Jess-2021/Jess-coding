@@ -49,5 +49,19 @@ var moveZeroes2 = (arr) => {
   return arr;
 }
 
+var moveZeroes = function(nums) {
+  let index = 0
+  for(let i = 0; i < nums.length; i++) {
+    if (nums[index] === 0) {
+      nums.splice(index, 1)
+      nums.push(0)
+    } else {
+      index++
+    }
+  }
+  return nums
+}
+// 判断的标准是第二个指针
+
 console.log(moveZeroes2([0,0,0,1,0,3,12]))
 // @lc code=end
