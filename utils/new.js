@@ -26,6 +26,15 @@ function newKeyword(Parent) {
   return typeof result === 'object' ? result : obj
 }
 
+function myNew(Parent) {
+  let obj = {}
+  Constructor = [].shift.call(arguments)
+  obj.__proto__ = Constructor.prototype
+  let result = Constructor.apply(obj, arguments)
+
+  return typeof result === 'object' ? result : obj
+}
+
 function People(name, age) {
   this.name = name
   this.age = age
@@ -34,5 +43,7 @@ function People(name, age) {
   }
 }
 
-const nancy = newKeyword(People, 'nancy', 17)
+const nancy = myNew(People, 'nancy', 17)
+console.log(nancy)
 nancy.say()
+

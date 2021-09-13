@@ -5,44 +5,43 @@
  * 3. 高端 - 通过占位符拜托顺序限制
  */
 
-  function curry(fn, args) {
-    var length = fn.length // 😒
-    args = args || [] // 😒
+function curry(fn, args) {
+  var length = fn.length // 😒
+  args = args || [] // 😒
 
-    return function() {
-      var _args = args.slice(0)
-      ;[].map.call(arguments, item => _args.push(item))
-      if (_args.length < length) {
+  return function() {
+    var _args = args.slice(0)
+    ;[].map.call(arguments, item => _args.push(item))
+    if (_args.length < length) {
 
-        return curry.call(this, fn, _args) // 😒
-      } else {
+      return curry.call(this, fn, _args) // 😒
+    } else {
 
-        return fn.apply(this, _args)
-      }
+      return fn.apply(this, _args)
     }
   }
+}
 
-  function curry(fn, args) {
-    let leng = fn.length
-    args = args || []
+function curry(fn, args) {
+  let length = fn.length
+  args = args || []
 
-    return function() {
-      let args = args.slice(0)
-      ;[].map.call(arguments, item => args.push(item))
-
-      if (args.length < leng) {
-        return curry.call(this, fn, args)
-      } else {
-        fn.apply(self, args)
-      }
+  return function() {
+    let _args = args.slice(0)
+    ;[].forEach.call(arguments, params => _args.push(params))
+    if (_args.length === length) {
+      return fn.apply(this, _args)
+    } else {
+      return curry.call(this, fn, _args)
     }
   }
+}
 
-  var fn = curry(function(a, b, c) {
-    console.log([a, b, c]);
-  });
+var fn = curry(function(a, b, c) {
+  console.log([a, b, c]);
+});
 
-  fn("a", "b", "c") // ["a", "b", "c"]
-  fn("a", "b")("c") // ["a", "b", "c"]
-  fn("a")("b")("c") // ["a", "b", "c"]
-  fn("a")("b", "c") // ["a", "b", "c"]
+fn("a", "b", "c") // ["a", "b", "c"]
+fn("a", "b")("c") // ["a", "b", "c"]
+fn("a")("b")("c") // ["a", "b", "c"]
+fn("a")("b", "c") // ["a", "b", "c"]

@@ -29,4 +29,15 @@ function newInstanceOf(left, right) {
   return false
 }
 
-console.log(newInstanceOf(Symbol(3243), Object))
+function myInstanceof(left, right) {
+  let rightProto = right.prototype
+  let leftProto = left.__proto__
+  while(leftProto) {
+    if (leftProto === rightProto) return true
+    leftProto = leftProto.__proto__
+  }
+
+  return false
+}
+
+console.log(myInstanceof(Symbol(3243), Object))
