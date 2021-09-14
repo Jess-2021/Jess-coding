@@ -20,7 +20,15 @@
 //  1. 前序。根左右
 //  2. 中序。左根右边。
 //  3. 后序。左右根。
-
+var obj = {
+  val: 1,
+  left: {
+    val: 3,
+    right: {
+      val: 2
+    }
+  }
+}
 /**
  * @param {TreeNode} root
  * @return {number[]}
@@ -37,24 +45,13 @@ var inorderTraversal = function(root) {
   recursion(root)
   return res
 };
-// @lc code=end
 
 var inorderTraversal = function(root) {
-  let res = []
-  let stack = []
-  let cur = root
-  while(stack.length || cur) {
-    if (cur) {
-      stack.push(cur)
-      cur = cur.left
-    } else {
-      cur = stack.pop()
-      res.push(cur.val)
-      cur = cur.right
-    }
-  }
-  return res
+  return root ? [...inorderTraversal(root.left), root.val, ...inorderTraversal(root.right)] : []
 }
+
+// @lc code=end
+
 
 // 先深层遍历，尽头后出栈一个，继续下一个的遍历
 var inorderTraversal = function(root) {
@@ -75,3 +72,23 @@ var inorderTraversal = function(root) {
 
   return res
 }
+
+var inorderTraversal = function(root) {
+  let res = []
+  let stack = []
+  let cur = root
+  while(stack.length || cur) {
+    if (cur) {
+      stack.push(cur)
+      cur = cur.left
+    } else {
+      cur = stack.pop()
+      res.push(cur.val)
+      cur = cur.right
+    }
+  }
+  return res
+}
+
+
+console.log(inorderTraversal(obj))

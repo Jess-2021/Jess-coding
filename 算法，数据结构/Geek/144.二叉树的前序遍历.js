@@ -29,7 +29,12 @@ var preorderTraversal = function(root) {
   return res
 };
 
-var preorderTraversal1 = function(root) {
+var preorderTraversal = function(root) {
+  return root ? [root.val, ...preorderTraversal(root.left), ...preorderTraversal(root.right)] : []
+}
+
+// 迭代法
+var preorderTraversal = function(root) {
   let res = []
   if (!root) return res
   let stack = [root]
@@ -42,6 +47,29 @@ var preorderTraversal1 = function(root) {
   return res
 }
 
-console.log(preorderTraversal1([1,null,2,3]))
+var preorderTraversal = function(root) {
+  if(!root) return []
+  let stack = [root], res = []
+  while(stack.length) {
+    let current = stack.pop()
+    res.push(current.val)
+    current.right && stack.push(current.right)
+    current.left && stack.push(current.left);
+  }
+
+  return res
+}
+
+var obj = {
+  val: 1,
+  left: {
+    val: 3,
+    right: {
+      val: 2
+    }
+  }
+}
+
+console.log(preorderTraversal(obj))
 // @lc code=end
 
