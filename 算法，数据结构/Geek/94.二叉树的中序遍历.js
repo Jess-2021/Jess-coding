@@ -75,20 +75,29 @@ var inorderTraversal = function(root) {
 
 var inorderTraversal = function(root) {
   let res = []
+  if (!root) return res
   let stack = []
-  let cur = root
-  while(stack.length || cur) {
-    if (cur) {
-      stack.push(cur)
-      cur = cur.left
+  let current = root
+  while(stack.length || current) {
+    if (current) {
+      stack.push(current)
+      current = current.left;
     } else {
-      cur = stack.pop()
-      res.push(cur.val)
-      cur = cur.right
+      current = stack.pop()
+      res.push(current.val)
+      current = current.right
     }
   }
   return res
 }
 
-
+var obj = {
+  val: 1,
+  left: {
+    val: 3,
+    right: {
+      val: 2
+    }
+  }
+}
 console.log(inorderTraversal(obj))

@@ -35,17 +35,29 @@ var postorderTraversal = function(root) {
 
 var postorderTraversal = function(root) {
   let res = []
-  if(!root) return res
+  if (!root) return res
   let stack = [root]
   while(stack.length) {
-    const node = stack.pop()
-    res.unshift(node.val)
-    node.left && stack.push(node.left)
-    node.right && stack.push(node.right)
+    let current = stack.pop()
+    res.unshift(current.val)
+    current.left && stack.push(current.left)
+    current.right && stack.push(current.right)
   }
+
   return res
 }
 
+var obj = {
+  val: 1,
+  left: {
+    val: 3,
+    right: {
+      val: 2
+    }
+  }
+}
+
+console.log(postorderTraversal(obj))
 
 // @lc code=end
 
