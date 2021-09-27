@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=102 lang=javascript
  *
  * [102] 二叉树的层序遍历
+ *
+ * 2
  */
 
 // @lc code=start
@@ -25,7 +27,7 @@ var levelOrder = function(root) {
   while(queue.length) {
     let qLength = queue.length
     res.push([])
-    for(let i = 1;i <= qLength; ++i) {
+    for(let i = 1;i <= qLength; ++i) { // 需要在循环后，改变循环条件
       const node = queue.shift()
       res[res.length - 1].push(node.val)
       if (node.left) queue.push(node.left)
@@ -35,5 +37,23 @@ var levelOrder = function(root) {
 
   return res
 };
+
+var levelOrder = function(root) {
+  let queue = [root], res = []
+  if (!root) return res
+
+  while(queue.length) {
+    let leng = queue.length
+    res.push([])
+    for(let i = 1; i <= leng; ++i) {
+      const node = queue.shift()
+      res[res.length - 1].push(node.val)
+      if (node.left) queue.push(node.left)
+      if (node.right) queue.push(node.right)
+    }
+  }
+
+  return res
+}
 // @lc code=end
 

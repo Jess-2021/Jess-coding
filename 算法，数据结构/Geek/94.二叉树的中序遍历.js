@@ -13,13 +13,6 @@
  *     this.right = (right===undefined ? null : right)
  * }
  */
-
-
-//  - 遍历：
-
-//  1. 前序。根左右
-//  2. 中序。左根右边。
-//  3. 后序。左右根。
 var obj = {
   val: 1,
   left: {

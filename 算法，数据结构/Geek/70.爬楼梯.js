@@ -19,9 +19,6 @@ var climbStairs = function(n) {
   }
   return c;
 };
-// 计算机操作
-// if else, for, recursion
-// 找最近 重复子问题
 // @lc code=end
 
 
