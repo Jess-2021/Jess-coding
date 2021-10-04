@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=283 lang=javascript
  *
  * [283] 移动零
+ * 
+ * 5
  */
 
 // @lc code=start
@@ -23,31 +25,6 @@ var moveZeroes = function(nums) {
   }
 };
 
-var moveZeroes1 = function (arr) {
-  let next = 0;
-  for (let i = 0; i < arr.length;i++) {
-    if (arr[next] === 0) {
-      arr.splice(next, 1);
-      arr[arr.length] = 0;
-    } else {
-      next++;
-    }
-  }
-  return arr;
-}
-
-var moveZeroes2 = (arr) => {
-  var temp = 0;
-  for (let i = 0; i < arr.length; i++) {
-    if (!arr[temp]) {
-      arr.splice(temp, 1);
-      arr.push(0);
-    } else {
-      temp++
-    }
-  }
-  return arr;
-}
 
 var moveZeroes = function(nums) {
   let index = 0
@@ -63,5 +40,18 @@ var moveZeroes = function(nums) {
 }
 // 判断的标准是第二个指针
 
-console.log(moveZeroes2([0,0,0,1,0,3,12]))
+var moveZeros = function(nums) {
+  let point = 0, length = nums.length
+  for(let i = 0; i < length; i++) {
+    if (nums[point] === 0) {
+      nums.splice(point, 1)
+      nums.push(0)
+    } else {
+      point++
+    }
+  }
+  return nums
+}
+
+console.log(moveZeros([0,0,0,1,0,3,12]))
 // @lc code=end
