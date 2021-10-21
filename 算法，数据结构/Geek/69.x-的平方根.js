@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=69 lang=javascript
  *
  * [69] x 的平方根
+ * 
+ * 2
  */
 
 // @lc code=start
@@ -36,5 +38,24 @@ var mySqrt = function(x) {
 
   return mid
 }
+
+var mySqrt = function(x) {
+  let left = 0, right = x
+  while(left <= right) {
+    mid = Math.floor((right + left) / 2)
+    let res = mid * mid
+    if (res === x) {
+      return mid
+    } else if (res < x) {
+      left = mid
+    } else {
+      right = mid
+    }
+  }
+
+  return right
+}
+
+
 // @lc code=end
 
