@@ -33,7 +33,20 @@ var climbStairs = function(n) {
   return a
 }
 
+var climbStairs = function(n) {
+  let f = new Array(n + 1).fill(0)
+  for(let i = 1; i < f.length; i++) {
+    if (i <= 2) {
+      f[i] = i
+    } else {
+      f[i] = f[i - 1] + f[i - 2]
+    }
+  }
+
+  return f[n]
+}
+
 // c = b
 // b = a
 // 两个b对角线交换
-console.log(climbStairs(45))
+console.log(climbStairs(2))
