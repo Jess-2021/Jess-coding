@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=78 lang=javascript
  *
  * [78] 子集
+ * 
+ * 3
  */
 
 // @lc code=start
@@ -38,6 +40,41 @@ var subsets = function(nums) {
   }
   return result
 }
+
+// 控制每一层选与不选
+var subsets = function(nums) {
+  let res = []
+  if (!nums.length) return res
+  recursion(res, 0, [])
+
+  return res
+  function recursion(list, index, handleList) {
+    if (index === nums.length) {
+      list.push([...handleList])
+      return
+    }
+    recursion(list, index + 1, handleList) // 不选
+    handleList.push(nums[index])
+    recursion(list, index +1, handleList)
+    handleList.pop()
+  }
+}
+
+var subsets = function(nums) {
+  let res = []
+  if (!nums.length) return res
+  dfs([], 0)
+
+  function dfs(list, index) {
+    res.push(list)
+    for(let i = index; i < nums.length; i++) {
+      dfs(list.concat(nums[i]), i + 1)
+    }
+  }
+
+  return res
+}
+
 
 console.log(subsets([1,2,3]))
 // @lc code=end
