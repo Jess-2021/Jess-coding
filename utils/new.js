@@ -26,13 +26,12 @@ function newKeyword(Parent) {
   return typeof result === 'object' ? result : obj
 }
 
-function myNew(Parent) {
+function newKeyword(parent) {
   let obj = {}
   Constructor = [].shift.call(arguments)
   obj.__proto__ = Constructor.prototype
-  let result = Constructor.apply(obj, arguments)
-
-  return typeof result === 'object' ? result : obj
+  const res = parent.call(obj, arguments)
+  return typeof res === 'object' ? res : obj
 }
 
 function People(name, age) {

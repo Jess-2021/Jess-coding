@@ -5,6 +5,10 @@
  * 3. 高端 - 通过占位符拜托顺序限制
  */
 
+// 要点：
+// 1. this => apply
+// 2. 参数的收集并返回
+
 function curry(fn, args) {
   var length = fn.length // 😒
   args = args || [] // 😒
@@ -30,6 +34,21 @@ function curry(fn, args) {
     let _args = args.slice(0)
     ;[].forEach.call(arguments, params => _args.push(params))
     if (_args.length === length) {
+      return fn.apply(this, _args)
+    } else {
+      return curry.call(this, fn, _args)
+    }
+  }
+}
+
+function curry(fn, args) {
+  let leng = fn.length
+  args = args || []
+
+  return function() {
+    let _args = args.slice(0)
+    ;[].forEach.call(arguments, params => _args.push(params))
+    if (_args.length >= leng) {
       return fn.apply(this, _args)
     } else {
       return curry.call(this, fn, _args)

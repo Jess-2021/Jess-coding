@@ -1,3 +1,5 @@
+// 处理好「构造函数的原型」和「构造函数」和「隐式原型」的关系
+
 var Person = function() {
   this.name = 'kevin'
 }
@@ -30,8 +32,7 @@ function Child(age, name) {
   Parent.call(this, name)
 }
 Child.prototype = new Parent()
-Child.prototype.constructor = Child
-
+Child.prototype.constructor = Child // 
 var child2 = new Child(17, 'jarar')
 
 // 3. 寄生组合继承：Child.prototype = new Parent();会调用多一次Parent构造函数，导致Child.prototype和child1都有Colors属性；
@@ -39,6 +40,14 @@ function extend(Child, Parent) {
   const F = function() {}
   F.prototype = Parent.prototype
   const instance =  new F()
+  instance.constructor = Child
+  Child.prototype = instance
+}
+
+function extend(Child, Parent) {
+  const F = function() {}
+  F.prototype = Parent.prototype
+  const instance = new F()
   instance.constructor = Child
   Child.prototype = instance
 }

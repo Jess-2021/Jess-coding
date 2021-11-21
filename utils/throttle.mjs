@@ -30,6 +30,20 @@ function throttle(fn, wait) {
   }
 }
 
+function throttle(fn, wait) {
+  let timer = null
+  return function() {
+    let self = this
+    if (!timer) {
+      timer = setTimeout(() => {
+        fn.apply(self, arguments)
+        clearTimeout(timer)
+        timer = null
+      }, wait)
+    }
+  }
+}
+
 var count = 1;
 var container = document.getElementById('container');
 

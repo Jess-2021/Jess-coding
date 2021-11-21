@@ -20,6 +20,14 @@ Function.prototype.myCall = function(ct) {
   return res
 }
 
+Function.prototype.myCall = function(content) {
+  content = content || window
+  content.fn = this
+  const res = content.fn([...arguments].slice(1))
+  delete content.fn
+  return res
+}
+
 /**
  * 改变this指向
  * 对函数进行调用
@@ -42,6 +50,17 @@ Function.prototype.myApply = function(context, arr) {
   return res
 }
 
+Function.prototype.myApply = function(context, arr) {
+  if (!(arr instanceof Array)) {
+    console.error('TypeError:not array')
+    return
+  }
+  context = context || window
+  context.fn = this
+  const res = context.fn(...arr)
+  delete context.fn
+  return res
+}
 
 /**
  * bind
@@ -97,6 +116,21 @@ Function.prototype.myBind = function(context) {
   binder.prototype = new FNOP()
 
   return binder
+}
+
+Function.prototype.myBind = function(context) {
+  let self = this
+  let args = [...arguments].slice(1)
+
+  const opFn = function() {}
+  const fn = function() {
+   let  _args = args.concat([...arguments])
+    return self.apply(this instanceof fn ? this : context, _args)
+  }
+  opFn.prototype = this.prototype
+  fn.prototype = new opFn()
+
+  return fn
 }
 
 // text 构造调用
