@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=206 lang=javascript
  *
  * [206] 反转链表
+ * 
+ * 2
  */
 
 // @lc code=start
@@ -35,6 +37,7 @@ var reverseList = function(head) {
     prev = current
     current = next
   }
+
   return prev
 }
 

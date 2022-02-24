@@ -49,4 +49,6 @@ var climbStairs = function(n) {
 // c = b
 // b = a
 // 两个b对角线交换
+// 移位时，首先处理应该是之后没有用到的数据，也就是即将被移除操作区的第一个的元素 
+// -> -> ->
 console.log(climbStairs(2))

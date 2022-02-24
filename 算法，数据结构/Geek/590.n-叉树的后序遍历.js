@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=590 lang=javascript
  *
  * [590] N 叉树的后序遍历
+ * 
+ * 2
  */
 
 // @lc code=start
@@ -61,6 +63,34 @@ const postorder = function(root) {
     res.push(node.val)
     stack.push(...node.children)
   }
+  return res.reverse()
+}
+
+const postorder = function(root) {
+  let res = []
+  if (!root) return res
+  const recursion = function(node) {
+    if (!node.children) return
+    for(let i = 0; i < node.children.length; i++) {
+      recursion(node.children[i])
+    }
+    res.push(node.val)
+  }
+  recursion(root)
+
+  return res
+}
+
+const postorder = function(root) {
+  let res = []
+  let stack = [root]
+  while(stack.length) {
+    let node = stack.pop()
+    if (!node) continue
+    stack.push(...node.children)
+    res.push(node.val)
+  }
+
   return res.reverse()
 }
 // @lc code=end

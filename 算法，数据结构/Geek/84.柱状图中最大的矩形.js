@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=84 lang=javascript
  *
  * [84] 柱状图中最大的矩形
+ * 
+ * 3
  */
 
 // @lc code=start
@@ -42,22 +44,6 @@ var singleStack = function(arr) {
   return res
 }
 
-function largestRectangleArea2(arr) {
-  let res = 0
-  for(let i = 0; i < arr.length; i++) {
-    let leftIndex = i
-    let rightIndex = i
-    while(arr[leftIndex]&& arr[leftIndex] >= arr[i]) {
-      leftIndex--
-    }
-    while(arr[rightIndex] && arr[rightIndex] >= arr[i]) {
-      rightIndex++
-    }
-    res = Math.max(res, (rightIndex - leftIndex -1) * arr[i])
-  }
-  return res
-}
-
 function singleStack2(arr) {
   let res = 0
   let stack = [-1]
@@ -73,7 +59,36 @@ function singleStack2(arr) {
   return res
 }
 
-var res = singleStack2([2,1,5,6,2,3])
+var largestRectangleArea = function(arr) {
+  let res = 0
+  for(let i = 0; i < arr.length; i++) {
+    let left = i, right = i
+    while(arr[left] >= arr[i] && left > 0) left--
+    while(arr[right] >= arr[i] && right < arr.length) right++
+
+    res = Math.max(res, (right - left - 1) * arr[i])
+  }
+  return res
+}
+
+function largestRectangleArea(arr) {
+  let res = 0
+  let singleStack = [-1]
+  for(let i = 0; i < arr.length; i++) {
+    while(arr[singleStack.at(-1)] >= arr[i] && singleStack.length > 1) {
+      res = Math.max(res, (arr[singleStack.pop()] * (i - singleStack.at(-1) - 1)))
+    }
+    stack.push(i)
+  }
+
+  while(stack.length > 1) {
+    res = Math.max(res, arr[singleStack.pop()] * (arr.length - stack[stack.length - 1] - 1))
+  }
+
+  return res
+}
+
+var res = largestRectangleArea([2,1,5,6,2,3])
 console.log(res)
 // @lc code=end
 

@@ -3,7 +3,7 @@
  *
  * [102] 二叉树的层序遍历
  *
- * 2
+ * 3
  */
 
 // @lc code=start
@@ -55,5 +55,36 @@ var levelOrder = function(root) {
 
   return res
 }
-// @lc code=end
+
+var levelOrder = function(root) {
+  let queue = [root], res = []
+  if (!root) return res
+  while(queue.length) {
+    let current = queue.shift()
+    res.push([])
+    res[leng - 1].push(current.val)
+    current.left && res.push(current.left)
+    current.right && res.push(current.right)
+  }
+
+  return res
+}
+
+var levelOrder = function(root) {
+  let queue = [root], res = []
+  if (!root) return res
+  while(queue.length) {
+    let leng = queue.length
+    res.push([])
+    for(let i = 1; i <= leng; i++) {
+      const node = queue.shift()
+      res[res.length - 1].push(node.val)
+      node.left && queue.push(node.left)
+      node.right && queue.push(node.right)
+    }
+  }
+
+  return res
+}
+  // @lc code=end
 

@@ -31,21 +31,23 @@ var longestCommonSubsequence = function(text1, text2) {
 
 var longestCommonSubsequence = function(text1, text2) {
   const t1 = text1.length, t2 = text2.length
-  const m = new Array(m + 1).fill(0).map(() => new Array(n + 1).fill(0))
+  const arr = new Array(t1 + 1).fill(0).map(i => new Array(t2 + 1).fill(0))
   for(let i = 1; i <= t1; i++) {
-    const idx1 = text1[i - 1]
+    const item = text1[i - 1]
     for(let j = 1; j <= t2; j++) {
-      const idx2 = text2[j - 1]
-      if (idx1 === idx2) {
-        m[i][j] = m[i - 1][j - 1] + 1
+      const item2 = text2[j - 1]
+      if (item2 === item) {
+        arr[i][j] = arr[i - 1][j - 1] + 1
       } else {
-        m[i][j] = Math.max(m[i - 1][j], m[i][j - 1])
+        arr[i][j] = Math.max(arr[i - 1][j], arr[i][j - 1])
       }
     }
   }
 
-  return m[t1][t2]
+  return arr[t1][t2]
 }
+
+console.log(longestCommonSubsequence('abcde', 'ace'))
 
 // @lc code=end
 

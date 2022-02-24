@@ -69,18 +69,18 @@ var inorderTraversal = function(root) {
 var inorderTraversal = function(root) {
   let res = []
   if (!root) return res
-  let stack = []
-  let current = root
-  while(stack.length || current) {
+  let stack = [], current = root
+  while(stack.length) {
     if (current) {
       stack.push(current)
-      current = current.left;
+      current = current.left
     } else {
-      current = stack.pop()
-      res.push(current.val)
-      current = current.right
+      node = stack.pop()
+      res.push(node)
+      current = node.right
     }
   }
+
   return res
 }
 

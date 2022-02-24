@@ -41,25 +41,6 @@ var subsets = function(nums) {
   return result
 }
 
-// 控制每一层选与不选
-var subsets = function(nums) {
-  let res = []
-  if (!nums.length) return res
-  recursion(res, 0, [])
-
-  return res
-  function recursion(list, index, handleList) {
-    if (index === nums.length) {
-      list.push([...handleList])
-      return
-    }
-    recursion(list, index + 1, handleList) // 不选
-    handleList.push(nums[index])
-    recursion(list, index +1, handleList)
-    handleList.pop()
-  }
-}
-
 var subsets = function(nums) {
   let res = []
   if (!nums.length) return res
@@ -75,6 +56,28 @@ var subsets = function(nums) {
   return res
 }
 
+var subsets = function(nums) {
+  let res = []
+  if (!nums.length) return res
+  function dfs(temp, idx) {
+    res.push(temp)
+    for(let i = idx; i < nums.length; i++) {
+      dfs(temp.concat(nums[i]), i + 1)
+    }
+  }
+  dfs([], 0)
+
+  return res
+}
+
+// 回溯问题
+
+// 1. 画出递归树，找到状态变量（*回溯函数的参数）
+// 2. 确立结束条件
+// 3. 选择列表，也可能为一部分结果（一般为回溯函数参数）
+// 4. 是否需要剪掉重复的路径，剪枝
+// 5. 做出选择，递归调用，进入下一层
+// 6. 撤销选择
 
 console.log(subsets([1,2,3]))
 // @lc code=end

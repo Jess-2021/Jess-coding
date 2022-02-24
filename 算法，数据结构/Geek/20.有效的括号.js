@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=20 lang=javascript
  *
  * [20] 有效的括号
+ * 
+ * 2
  */
 
 // @lc code=start
@@ -38,6 +40,30 @@ var isValid = function(str) {
   }
   return stack.length === 0
 };
+
+var isValid = function(str) {
+  let stack = []
+  for(let i = 0; i < str.length; i++) {
+    let c = str[i]
+    switch(c) {
+      case '(':
+        stack.push(')');
+        break;
+      case '{':
+        stack.push('}')
+        break
+      case '[':
+        stack.push(']')
+        break
+      default:
+        if (c !== stack.pop()) {
+          return false
+        }
+    }
+  }
+
+  return !stack.length
+}
 // @lc code=end
 
-console.log(isValid("(])"))
+console.log(isValid("([{])"))

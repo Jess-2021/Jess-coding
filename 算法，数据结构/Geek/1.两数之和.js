@@ -20,42 +20,6 @@
  * @param {number} target
  * @return {number[]}
  */
-// var twoSum = function(nums, target) {
-//   let arr = []
-
-//   for (let i = 0; i < nums.length-1; i++) {
-//     for (let j = i+1; j <= nums.length; j++) {
-//       if (nums[i] + nums[j] === target) {
-//         arr = [i, j]
-//       }
-//     }
-//   }
-//   return arr;
-// };
-
-// var twoSum = function (arr, target) {
-//   let res = [];
-//   for (let i = 0; i < arr.length - 1; i++) {
-//     for (let j = i + 1; j < arr.length; j++) {
-//       if (arr[i] + arr[j] === target) {
-//         res = [i, j];
-//       }
-//     }
-//   }
-//   return res
-// }
-
-var twoSum2 = function (arr, tag) {
-  let res = [];
-  for (let i = 0; i < arr.length; i++) {
-    for (let j = 1; j < arr.length - 1; j++) {
-      if (arr[i] + arr[j] === tag) {
-        res = [i, j];
-      }
-    }
-  }
-  return res;
-}
 
 var twoSum3 = function (arr, target) {
   let map = new Map()
@@ -74,6 +38,17 @@ function twoSum(arr, target) {
     let found = map.get(target - arr[i])
     if (found !== undefined) {
       return [i, found]
+    } else {
+      map.set(arr[i], i)
+    }
+  }
+}
+
+function twoSum(arr, target) {
+  let map = new Map()
+  for(let i = 0; i < arr.length; i++) {
+    if (map.has(target - arr[i])) {
+      return [i, map.get(target - arr[i])]
     } else {
       map.set(arr[i], i)
     }

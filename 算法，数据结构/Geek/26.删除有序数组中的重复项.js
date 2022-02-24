@@ -22,6 +22,20 @@ var removeDuplicates = function(nums) {
   return ++a
 };
 
+var removeDuplicates = function(nums) {
+  let a = 0, b = 1
+  while(a < nums.length) {
+    if (nums[a] === nums[b]) {
+      nums.splice(b, 1)
+    } else {
+      a++
+      b++
+    }
+  }
+
+  return nums.length
+}
+
 // 限制空间 -> 双指针
 // @lc code=end
 

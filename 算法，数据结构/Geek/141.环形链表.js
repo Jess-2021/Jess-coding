@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=141 lang=javascript
  *
  * [141] 环形链表
+ * 
+ * 3
  */
 
 // @lc code=start
@@ -50,6 +52,30 @@ var hasCycle = function(head) {
     fast = fast?.next?.next || null
   }
   return false
+}
+
+var hasCycle = function(head) {
+  if (!head || !head.next) return false
+  let slow = head
+  let fast = head.next
+  while(slow) {
+    if (slow === fast) {
+      return true
+    } else {
+      slow = slow?.next || null
+      fast = fast?.next?.next || null
+    }
+  }
+
+  return false
+}
+
+var hasCycle = function(head) {
+  try {
+    return !!!JSON.stringify(head)
+  } catch {
+    return true
+  }
 }
 // @lc code=end
 

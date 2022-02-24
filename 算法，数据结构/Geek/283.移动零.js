@@ -41,15 +41,16 @@ var moveZeroes = function(nums) {
 // 判断的标准是第二个指针
 
 var moveZeros = function(nums) {
-  let point = 0, length = nums.length
-  for(let i = 0; i < length; i++) {
-    if (nums[point] === 0) {
-      nums.splice(point, 1)
+  let temp = 0, leng = nums.length
+  for(let i = 0; i < leng; i++) {
+    if (!nums[temp]) {
+      nums.splice(temp, 1)
       nums.push(0)
     } else {
-      point++
+      temp++
     }
   }
+  
   return nums
 }
 

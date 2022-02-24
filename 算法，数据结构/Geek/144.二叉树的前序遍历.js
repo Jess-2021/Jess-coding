@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=144 lang=javascript
  *
  * [144] 二叉树的前序遍历
+ * 
+ * 3  
  */
 
 // @lc code=start
@@ -13,21 +15,6 @@
  *     this.right = (right===undefined ? null : right)
  * }
  */
-/**
- * @param {TreeNode} root
- * @return {number[]}
- */
-var preorderTraversal = function(root) {
-  let res = []
-  let recursion = function(root) {
-    if (!root) return;
-    res.push(root.val)
-    recursion(root.left)
-    recursion(root.right)
-  }
-  recursion(root)
-  return res
-};
 
 var preorderTraversal = function(root) {
   return root ? [root.val, ...preorderTraversal(root.left), ...preorderTraversal(root.right)] : []
@@ -55,6 +42,34 @@ var preorderTraversal = function(root) {
     res.push(current.val)
     current.right && stack.push(current.right)
     current.left && stack.push(current.left);
+  }
+
+  return res
+}
+
+var preorderTraversal = function(root) {
+  let res = []
+  if (!root) return res
+  const recursion = function(node) {
+    if (!node) return
+    res.push(node.val)
+    node.left && recursion(node.left)
+    node.right && recursion(node.right)
+  }
+
+  recursion(root)
+  return res
+}
+
+var preorderTraversal = function(root) {
+  let res = []
+  if (!root) return res
+  let stack = [root]
+  while(stack.length) {
+    let node = stack.pop()
+    res.push(node.val)
+    node.right && stack.push(node.right)
+    node.left && stack.push(node.left)
   }
 
   return res

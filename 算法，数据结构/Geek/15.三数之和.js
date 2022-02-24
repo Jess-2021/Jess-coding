@@ -8,79 +8,6 @@
  * @param {number[]} nums
  * @return {number[][]}
  */
-// var threeSum = function(nums) {
-//   let res = [];
-//   if (nums.length < 3 || nums === null) return res;
-//   let arr = nums.sort((a, b) => a - b);
-//   for (let i = 0; i < arr.length; i++) {
-//     if (nums[i] > 0) break;
-//     if (i > 0 && nums[i] == nums[i - 1]) continue;// 去重
-//     for (let x = i + 1, y = arr.length - 1; x < y;) {
-//       let sum = arr[i] + arr[x] + arr[y];
-//       if (sum === 0) {
-//         res.push([nums[i], nums[x], nums[y]]);
-//         // 当他们满足条件时，也要进行夹逼，但需要避开同样的值
-//         while (x<y && arr[x] === arr[x + 1]) x++;
-//         while (x<y && arr[y] === arr[y-1]) y--;
-//         x++;
-//         y--;
-//       }
-//       else if (sum < 0) x++;
-//       else if (sum > 0) y--;
-//     }
-//   }
-//   return res;
-// };
-// var threeSum = function (nums) {
-//     var res = [];
-//     var len = nums.length;
-//     if (len < 3)
-//         return res;
-//     nums.sort(function (a, b) { return a - b; });
-//     for (var i = 0; i < len - 1; i++) {
-//         if (i > 0 && nums[i - 1] === nums[i])
-//             continue;
-//         for (var x = i + 1, y = len - 1; x < y;) {
-//             var sum = nums[i] + nums[x] + nums[y];
-//             if (sum === 0) {
-//                 res.push([nums[i], nums[x], nums[y]]);
-//                 while (nums[x] === nums[x - 1])
-//                     x++;
-//                 while (nums[y] === nums[y - 1])
-//                     y--;
-//                 x++;
-//                 y--;
-//             }
-//             else if (sum > 0)
-//                 y--;
-//             else if (sum < 0)
-//                 x++;
-//         }
-//     }
-//     return res;
-// };
-
-var threeSum3 = function (num) {
-    let res = []
-    if (num.length < 3) return []
-    num.sort((a, b) => a - b)
-    for (let i = 0;i < num.length - 1; i++) {
-        if (i > 0 && num[i - 1] === num[i])
-            continue;
-        for (let x = i + 1, y = num.length - 1; x < y;) {
-            let sum = num[x] + num[y] + num[i]
-            if (sum === 0) {
-                res.push([num[x], num[y], num[i]])
-                while(num[y] === num[y - 1]) y--;
-                x++;
-                y--;
-            }
-            else if (sum > 0) y--;
-            else if (sum < 0) x++;
-        }
-    }
-    return res
-}
 
 var threeSum = function(nums) {
 	let res = []
@@ -100,6 +27,28 @@ var threeSum = function(nums) {
 			else if (sum < 0) j++;
 		}
 	}
+	return res
+}
+
+function threeSum(nums) {
+  let res = []
+	if (!nums || nums.length < 3) return res
+	nums.sort((a,b) => a - b)
+	for(let i = 0; i < nums.length - 1; i++) {
+		if (i > 0 && nums[i] === nums[i - 1]) continue
+		for(let x = i + 1, y = nums.length - 1; x < y;) {
+			let sum = nums[i] + nums[x] + nums[y]
+			if (!sum) {
+				res.push(nums[x], nums[i], nums[y])
+				while(nums[y] === nums[y - 1]) y--
+				y--
+				x++
+			}
+			else if (sum < 0) x++
+			else if (sum > 0) y--
+		}
+	}
+
 	return res
 }
 

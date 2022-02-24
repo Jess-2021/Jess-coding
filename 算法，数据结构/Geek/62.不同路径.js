@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=62 lang=javascript
  *
  * [62] 不同路径
+ * 
+ * 3
  */
 
 // @lc code=start
@@ -26,5 +28,30 @@ var uniquePaths = function(m, n) {
 
   return f[m - 1][n - 1]
 };
+
+var uniquePaths = function(m, n) {
+  let arr = new Array(n + 1).fill(1)
+  for(let i = 1; i < m; i++) {
+    for(let j = 1; j < n; j++) {
+      arr[j] = arr[j] + arr[j - 1]
+    }
+  }
+
+  return arr[n-1]
+}
+
+var uniquePaths = function(m, n) {
+  const arr = new Array(m).fill(1)
+  for(let i = 1; i < n; i++) {
+    for(let j = 1; j < m; j++) {
+      arr[j] = arr[j - 1] + arr[j]
+    }
+  }
+
+  return arr[m - 1]
+}
+
+// 已经列了一层需要忽略
+console.log(uniquePaths(3, 7))
 // @lc code=end
 

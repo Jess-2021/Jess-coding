@@ -57,6 +57,15 @@ var myPow = function(x, n) {
   return n < 0 ? 1 / res : res
 }
 
+var myPow = function(x, n) {
+  if (n === 0) return 1
+  if (n === 1) return x
+  let tempN = Math.abs(n)
+  let res = tempN % 2 ? myPow(x * x, Math.floor(tempN / 2)) * x : myPow(x * x, tempN / 2)
+
+  return n < 0 ? 1 / res : res
+}
+
 console.log(myPow(2.00000, 10))
 // @lc code=end
 

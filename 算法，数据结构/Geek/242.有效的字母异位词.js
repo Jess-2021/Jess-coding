@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=242 lang=javascript
  *
  * [242] 有效的字母异位词
+ * 
+ * 3
  */
 
 // @lc code=start
@@ -26,6 +28,10 @@ var isAnagram = function(s, t) {
 
 var isAnagram2 = function(s, t) {
   return s.length === t.length && [...s].sort().join('') === [...t].sort().join('')
+}
+
+var isAnagram = function(s, t) {
+  return s.length === t.length && [...s].sort().toString() === [...t].sort().toString()
 }
 
 var bool = isAnagram2('rsat', 'tsar')

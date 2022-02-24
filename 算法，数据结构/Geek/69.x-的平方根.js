@@ -3,7 +3,7 @@
  *
  * [69] x 的平方根
  * 
- * 2
+ * 3
  */
 
 // @lc code=start
@@ -56,6 +56,23 @@ var mySqrt = function(x) {
   return right
 }
 
+var mySqrt = function(x) {
+  let left = 0, right = Math.floor(x / 2) + 1
+  while(left <= right) {
+    let mid = Math.floor((left + right) / 2)
+    let sum = mid * mid
+    if (sum === x) {
+      return mid
+    } else if (x > sum) {
+      left = mid + 1
+    } else {
+      right = mid - 1
+    }
+  }
 
+  return right
+}
+
+console.log(mySqrt(8))
 // @lc code=end
 

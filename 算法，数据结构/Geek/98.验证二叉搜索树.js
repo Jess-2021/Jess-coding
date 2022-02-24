@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=98 lang=javascript
  *
  * [98] 验证二叉搜索树
+ * 
+ * 2
  */
 
 // @lc code=start
@@ -31,5 +33,33 @@ var isValidBST = function(root) {
   }
   return recursion(root)
 };
+
+var isValidBST = function(root) {
+  let prev = null
+  const recursion = function(node) {
+    if (!node) return true
+    let left = recursion(node.left)
+    if (prev !== null && node.val <= prev.val) return false
+    // prev = prev ? node.val > prev.val ? node : prev : // node一定大于prev
+    prev = node
+    let right = recursion(node.right)
+
+    return left && right
+  }
+
+  return recursion(root)
+}
+
+var obj = {
+  val: 2,
+  left: {
+    val: 1,
+  },
+  right: {
+    val: 3
+  }
+}
+
+console.log(isValidBST(obj))
 // @lc code=end
 
