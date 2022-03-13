@@ -11,14 +11,6 @@ function newKeyword(Parent) {
 }
 
 function newKeyword(Parent) {
-  let obj = new Object()
-  Constructor = [].shift.call(arguments)
-  obj.__proto__ = Constructor.prototype
-  let res = Constructor.apply(obj, arguments)
-  return typeof res === 'object' ? res : obj
-}
-
-function newKeyword(Parent) {
   let obj = {}
   Constructor = [].shift.call(arguments) // 已经将第一个参数取出来🐷
   obj.__proto__ = Constructor.prototype
@@ -27,12 +19,14 @@ function newKeyword(Parent) {
 }
 
 function newKeyword(parent) {
-  let obj = {}
-  Constructor = [].shift.call(arguments)
+  let obj = new Object()
+  constructor = [].shift.call(arguments)
   obj.__proto__ = Constructor.prototype
-  const res = parent.call(obj, arguments)
-  return typeof res === 'object' ? res : obj
+  let result = constructor.apply(obj, arguments)
+
+  return typeof result === 'object' ? result : obj
 }
+
 
 function People(name, age) {
   this.name = name

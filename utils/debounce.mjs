@@ -68,51 +68,25 @@ function debounce(fn, wait) {
 }
 
 function debounce(fn, wait) {
-  let prev = 0, timer = null
+  let prev = +new Date(), timer = null
 
   return function() {
-    let self = this
-    let now = new Date().valueOf()
+    let self = this, now = +new Date(), args = arguments
     let least = wait - (now - prev)
-    args = arguments
     if (least < 0) {
       if (timer) {
         clearTimeout(timer)
         timer = null
       }
-      fn.call(self, args)
+      prev = +new Date()
+      fn.apply(self, args)
     } else if (!timer) {
       timer = setTimeout(() => {
+        prev = +new Date()
+        timer = null
         fn.call(self, args)
-        clearTimeout(timer) // 🐖
-        timer = null
-      }, least) // 🐖
-    }
-    prev = now
-  }
-}
-
-function debounce(fn, wait) {
-  let prev = 0, timer = null
-
-  return function() {
-    let self = this
-    let now = new Date().valueOf()
-    let least = wait - (now - prev)
-    if (least < 0) {
-      if (timer) {
-        clearTimeout(timer)
-        timer = null
-      }
-      fn.call(self, arguments)
-    } else if (!timer) {
-      timer = setTimeout(() => {
-        fn.call(self, arguments)
-        clearTimeout(timer)
-        timer = null
       }, least)
     }
-    prev = now
   }
 }
 

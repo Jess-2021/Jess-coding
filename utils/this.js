@@ -11,23 +11,14 @@ Function.prototype.myCall = function(content) {
   return res // 有返回的值
 }
 
-Function.prototype.myCall = function(ct) {
-  let context = [].shift.call(arguments) || window
-  context.fn = this
-  let res = context.fn(...arguments)
-  delete context.fn
-
-  return res
-}
-
 Function.prototype.myCall = function(content) {
-  content = content || window
+  var content = content || window
   content.fn = this
   const res = content.fn([...arguments].slice(1))
   delete content.fn
+
   return res
 }
-
 /**
  * 改变this指向
  * 对函数进行调用
@@ -59,6 +50,19 @@ Function.prototype.myApply = function(context, arr) {
   context.fn = this
   const res = context.fn(...arr)
   delete context.fn
+  return res
+}
+
+Function.prototype.myApply = function(content, arr) {
+  if (!(arr instanceof Array)) {
+    log('TypeError: not array')
+    return
+  }
+  content = content || window
+  content.fn = this
+  const res = content.fn([...arr])
+  delete content.fn
+
   return res
 }
 
@@ -106,31 +110,20 @@ Function.prototype.myBind = function(context) {
 
 Function.prototype.myBind = function(context) {
   let self = this
-  let midArg = [...arguments].slice(1)
+  let args = [].slice.call(arguments, 1)
+
   function FNOP() {}
-  let binder = function() {
-    let args = midArg.concat([...arguments])
-    return self.apply(this instanceof FNOP ? this : context, args)
+  function returnFn() {
+    const _args = args.concat([...arguments])
+    const that = this instanceof FNOP ? this : context
+
+    return self.apply(that, _args)
   }
-  FNOP.prototype = this.prototype
-  binder.prototype = new FNOP()
 
-  return binder
-}
+  FNOP.prototype = self.prototype
+  returnFn.prototype = new FNOP()
 
-Function.prototype.myBind = function(context) {
-  let self = this
-  let args = [...arguments].slice(1)
-
-  const opFn = function() {}
-  const fn = function() {
-   let  _args = args.concat([...arguments])
-    return self.apply(this instanceof fn ? this : context, _args)
-  }
-  opFn.prototype = this.prototype
-  fn.prototype = new opFn()
-
-  return fn
+  return returnFn
 }
 
 // text 构造调用

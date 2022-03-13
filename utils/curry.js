@@ -27,21 +27,6 @@ function curry(fn, args) {
 }
 
 function curry(fn, args) {
-  let length = fn.length
-  args = args || []
-
-  return function() {
-    let _args = args.slice(0)
-    ;[].forEach.call(arguments, params => _args.push(params))
-    if (_args.length === length) {
-      return fn.apply(this, _args)
-    } else {
-      return curry.call(this, fn, _args)
-    }
-  }
-}
-
-function curry(fn, args) {
   let leng = fn.length
   args = args || []
 
@@ -52,6 +37,21 @@ function curry(fn, args) {
       return fn.apply(this, _args)
     } else {
       return curry.call(this, fn, _args)
+    }
+  }
+}
+
+function curry(fn, args) {
+  args = args || []
+  let length = fn.length
+
+  return function() {
+    let tempArgs = args.slice(0)
+    ;[].forEach.call(arguments, params => tempArgs.push(params))
+    if (tempArgs.length >= length) {
+      return fn.apply(this, tempArgs)
+    } else {
+      return curry.call(this, fn, tempArgs)
     }
   }
 }

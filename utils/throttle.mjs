@@ -18,29 +18,12 @@ function throttle(fn, wait) {
   let timer = 0
 
   return function() {
-    if (!timer) {
-      let self = this
-      let args = arguments
-      timer = setTimeout(() => {
-        fn.apply(self, args)
-        clearTimeout(timer)
-        timer = null
-      }, wait)
-    }
-  }
-}
-
-function throttle(fn, wait) {
-  let timer = null
-  return function() {
-    let self = this
-    if (!timer) {
-      timer = setTimeout(() => {
-        fn.apply(self, arguments)
-        clearTimeout(timer)
-        timer = null
-      }, wait)
-    }
+    const self = this
+    const args = arguments
+    clearTimeout(timer)
+    timer = setTimeout(() => {
+      fn.apply(self, args)
+    }, wait)
   }
 }
 

@@ -33,6 +33,16 @@ function Child(age, name) {
 }
 Child.prototype = new Parent()
 Child.prototype.constructor = Child // 
+
+function Child(name, age) {
+  this.childName = name
+  Parent.call(this, age)
+}
+
+Child.prototype = new Parent()
+Child.prototype.constructor = Child
+
+
 var child2 = new Child(17, 'jarar')
 
 // 3. 寄生组合继承：Child.prototype = new Parent();会调用多一次Parent构造函数，导致Child.prototype和child1都有Colors属性；
