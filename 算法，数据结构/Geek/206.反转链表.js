@@ -30,7 +30,7 @@ var reverseList = function(head) {
 };
 
 var reverseList = function(head) {
-  let current = head, prev = null
+  let prev = null, current = head
   while(current) {
     const next = current.next
     current.next = prev
@@ -40,6 +40,7 @@ var reverseList = function(head) {
 
   return prev
 }
+
 
 // 类似于数的交换爬楼梯
 
