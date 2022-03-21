@@ -55,19 +55,20 @@ var generateParenthesis = function(n) {
 
 var generateParenthesis = function(n) {
   let res = []
-  const recursion = function(left, right, str) {
-    if (left === n && right === n) {
+  let recursion = function(str, left, right) {
+    if (str.length === 2 * n && left === right) {
       res.push(str)
       return
     }
-    if (left < n) recursion(left + 1, right, str + '(')
-    if (right < left) recursion(left, right + 1, str + ')')
-  }
-  recursion(0, 0, '')
 
+    if (left <= n) recursion(str + '(', left + 1, right)
+    if (right <= n && right <left) recursion(str + ')', left, right + 1)
+  }
+
+  recursion('', 0, 0)
   return res
 }
 
-console.log(generateParenthesis(3))
+console.log(generateParenthesis(5))
 // @lc code=end
 
