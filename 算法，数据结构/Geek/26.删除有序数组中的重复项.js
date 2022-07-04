@@ -36,6 +36,21 @@ var removeDuplicates = function(nums) {
   return nums.length
 }
 
+var removeDuplicates = function(nums) {
+  let i = 0, j = 1
+  for(;j < nums.length;) {
+    if (nums[j] === nums[i]) {
+      nums.splice(j, 1)
+    } else {
+      i++
+      j++
+    }
+  }
+  return nums.length
+}
+
+console.log(removeDuplicates([0,0,1,1,1,2,2,3,3,4]))
+
 // 限制空间 -> 双指针
 // @lc code=end
 

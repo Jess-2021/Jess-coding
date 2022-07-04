@@ -2,6 +2,7 @@
  * @lc app=leetcode.cn id=1 lang=javascript
  *
  * [1] 两数之和
+ * 3
  */
 
 // 给定一个整数数组 nums 和一个整数目标值 target，请你在该数组中找出 和为目标值 的那 两个 整数，并返回它们的数组下标。
@@ -33,29 +34,33 @@ var twoSum3 = function (arr, target) {
 }
 
 function twoSum(arr, target) {
-  let map = new Map([[arr[0], 0]])
-  for(let i = 1;i < arr.length; i++) {
-    let found = map.get(target - arr[i])
-    if (found !== undefined) {
-      return [i, found]
+  let res = []
+  let map = new Map()
+  for(let i = 0; i < arr.length; i++) {
+    let current = map.get(target - arr[i])
+    if (current != null) {
+      return [current, i]
     } else {
       map.set(arr[i], i)
     }
   }
+
+  return res
 }
 
 function twoSum(arr, target) {
-  let map = new Map()
-  for(let i = 0; i < arr.length; i++) {
-    if (map.has(target - arr[i])) {
-      return [i, map.get(target - arr[i])]
-    } else {
-      map.set(arr[i], i)
+  let res = []
+  for(let i = 0; i < arr.length - 1; i++) {
+    for(let j = i + 1; j < arr.length; j++) {
+      if (target - arr[i] === arr[j]) {
+        return [i, j]
+      }
     }
   }
+  return res
 }
 // Map方法的操作：
 // new Map([[arr[0], 0]])
 
-console.log(twoSum([2,7,11,15], 9))
+console.log(twoSum([0,0, 3,3], 6))
 // @lc code=end

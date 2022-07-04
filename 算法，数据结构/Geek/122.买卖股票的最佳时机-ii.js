@@ -2,7 +2,7 @@
  * @lc app=leetcode.cn id=122 lang=javascript
  *
  * [122] 买卖股票的最佳时机 II
- * 
+ *
  * 2
  */
 
@@ -58,6 +58,28 @@ var maxProfit = function(prices) {
   }
 
   return dp[prices.length - 1][0]
+}
+
+var maxProfit = function(prices) {
+  let dp = new Array(prices.length).fill([0, 0])
+  dp[0][0] = 0
+  dp[0][1] = -prices[0]
+  for(let i = 1; i < prices.length; i++) {
+    dp[i][0] = Math.max(dp[i - 1][1] + prices[i], dp[i - 1][0])
+    dp[i][1] = Math.max(dp[i - 1][0] - prices[i], dp[i - 1][1])
+  }
+
+  return dp[prices.length - 1][0]
+}
+
+var maxProfit = function(prices) {
+  let hold = -prices[0], noHold = 0
+  for (let i = 1; i < prices.length; i++) {
+    hold = Math.max(hold, noHold - prices[i])
+    noHold = Math.max(noHold, hold + prices[i])
+  }
+
+  return noHold
 }
 
 console.log(maxProfit([1,2,3,4,5]))
