@@ -34,6 +34,9 @@ var isAnagram = function(s, t) {
   return s.length === t.length && [...s].sort().toString() === [...t].sort().toString()
 }
 
+var isAnagram = function(s, t) {
+  return s.length === t.length && [...s].sort().toString() === [...t].sort().toString()
+}
 var bool = isAnagram2('rsat', 'tsar')
 console.log(bool)
 // @lc code=end
