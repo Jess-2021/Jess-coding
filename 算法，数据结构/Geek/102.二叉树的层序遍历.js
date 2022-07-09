@@ -86,5 +86,22 @@ var levelOrder = function(root) {
 
   return res
 }
+
+var levelOrder = function(root) {
+  let res = [], list = [root]
+  if (!root) return []
+  while(list.length) {
+    const tmp = []
+    res.push([])
+    list.forEach(i => {
+      res[res.length - 1].push(i.val)
+      i.left && tmp.push(i.left)
+      i.right && tmp.push(i.right)
+    })
+    queue = tmp
+  }
+
+  return res
+}
   // @lc code=end
 

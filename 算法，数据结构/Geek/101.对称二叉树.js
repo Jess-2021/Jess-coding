@@ -30,6 +30,16 @@ var isSymmetric = function(root) {
   return recursion(root, root)
 };
 
+var isSymmetric = function(root) {
+  var recursion = function(l, r) {
+    if (!l && !r) return true
+    if (!root.left || !root.right) return false
+    return l.val === r.val && recursion(l.left, r.right) && recursion(r.left, l.right)
+  }
+
+  return recursion(root, root)
+}
+
 isSymmetric()
 // @lc code=end
 

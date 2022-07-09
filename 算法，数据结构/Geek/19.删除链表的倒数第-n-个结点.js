@@ -35,5 +35,19 @@ var removeNthFromEnd = function(head, n) {
 
   return slow
 };
-// @lc code=end
+
+var removeNthFromEnd = function(head, n) {
+  let slow = head, fast = head
+  for (let i = 0; i < n; i++) fast = fast.next
+
+  if (!fast) return []
+  while(fast) {
+    fast = fast.next
+    slow = slow.next
+  }
+  slow.next = slow.next.next
+
+  return res.next
+}
+  // @lc code=end
 

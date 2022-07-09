@@ -39,5 +39,16 @@ var mergeTwoLists = function(l1, l2) {
   l2.next = mergeTwoLists(l1, l2.next)
   return l2
 }
-// @lc code=end
+
+var mergeKLists = function(lists) {
+  if (!lists.length) return lists[0] ?? null
+  return merge(lists)
+}
+
+var merge = function(list) {
+  if (list.length === 1) return list[0]
+  let left = list.splice(0, Math.floor(list.length / 2))
+  return mergeTwoLists(merge(left), merge(list))
+}
+  // @lc code=end
 
