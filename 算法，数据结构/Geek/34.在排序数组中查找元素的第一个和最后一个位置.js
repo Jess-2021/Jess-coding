@@ -2,6 +2,8 @@
  * @lc app=leetcode.cn id=34 lang=javascript
  *
  * [34] 在排序数组中查找元素的第一个和最后一个位置
+ *
+ * 2
  */
 
 // @lc code=start
@@ -33,6 +35,29 @@ var searchRange = function(nums, target) {
   return [start + 1, end - 1]
 };
 
-console.log(searchRange([5,7,7,8,8,10], 6))
+var searchRange = function(nums, target) {
+  let l = 0, r = nums.length - 1, res = null
+  if (nums.length === 1 && nums[0] === target) return [0,0]
+  while(l <= r && res == null) {
+    let mid = Math.floor((l + r) / 2)
+    if (nums[mid] < target) {
+      l = mid + 1
+    } else if (nums[mid] > target) {
+      r = mid - 1
+    } else {
+      res = mid
+    }
+  }
+  if (res == null) return [-1, -1]
+  let start = end = res
+  while(nums[start] === target || nums[end] === target) {
+    if (nums[start] === target) start--
+    if (nums[end] === target) end++
+  }
+
+  return [start + 1, end - 1]
+}
+
+console.log(searchRange([5,7,7,8,8,10], 8))
 // @lc code=end
 
