@@ -1,0 +1,46 @@
+<script>
+  let activeEffect
+  class Dep {
+    constructor(value) {
+      this.subscribers = new Set()
+      if (value) {
+        this._value = value
+      }
+    }
+    get value() {
+      this.depend()
+      return this._value
+    }
+
+    set value(val) {
+      this._value = val
+      this.notify()
+    }
+
+    notify() {
+      this.subscribers.forEach(sub => {
+        sub()
+      })
+    }
+
+    depend() {
+      if (activeEffect) {
+        this.subscribers.add(activeEffect)
+      }
+    }
+  }
+
+  function watchEffect(fn) {
+    activeEffect = fn
+    fn()
+    activeEffect = null
+  }
+
+  const dep = new Dep('hello')
+
+  watchEffect(() => {
+    console.log(dep.value)
+  })
+
+  dep.value = 'hello world'
+</script>

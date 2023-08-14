@@ -39,7 +39,7 @@ var longestPalindrome = function(s) {
       l--;
       r++
     }
-    return s.substr(l + 1, r - l - 1)
+    return s.substr(l + 1, r - l)
   }
   for(let i = 0; i < s.length; i++) {
     let s1 = palindrome(s, i, i)
@@ -51,6 +51,6 @@ var longestPalindrome = function(s) {
   
   return res
 }
-console.log(longestPalindrome("ac"))
+console.log(longestPalindrome("cbbd"))
 // @lc code=end
 

@@ -25,18 +25,5 @@ function instanceOf(left, right) {
   return false
 }
 
-function instanceOf(left, right) {
-  let rightProto = right.prototype
-  let leftProto = left.__proto__
-  while(leftProto) {
-    if (leftProto === rightProto) {
-      return true
-    } else {
-      leftProto = leftProto.__proto__
-    }
-  }
-
-  return false
-}
 
 console.log(myInstanceof(Symbol(3243), Object))

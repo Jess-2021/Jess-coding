@@ -1,0 +1,75 @@
+<script>
+  let activeEffect
+  class Dep {
+    constructor(val) {
+      this.subscribers = new Set()
+      this._value = val
+    }
+
+    depend() {
+      if (activeEffect) {
+        this.subscribers.add(activeEffect)
+      }
+    }
+
+    notify() {
+      this.subscribers.forEach(sub => {
+        sub()
+      });
+    }
+  }
+
+  function watchEffect(effect) {
+    activeEffect = effect
+    effect()
+    activeEffect = null
+  }
+
+  const targetMap = new WeakMap()
+
+  function getDep(tar, key) {
+    let depsMap = targetMap.get(tar)
+    if (!depsMap) {
+      depsMap = new Map()
+      targetMap.set(tar, depsMap)
+    }
+    let dep = depsMap.get(key)
+    if (!dep) {
+      dep = new Dep()
+      depsMap.set(key, dep)
+    }
+
+    return dep
+  }
+
+  const reactiveHandlers = {
+    get(target, key, receiver) {
+      const dep = getDep(target, key)
+
+      dep.depend()
+      // return target[key]
+      return Reflect.get(target, key, receiver)
+    },
+    set(target, key, value, receiver) {
+      const dep = getDep(target, key)
+      const result = Reflect.set(target, key, value, receiver)
+      dep.notify()
+
+      return result
+    }
+  }
+
+  function reactive(raw) {
+    return new Proxy(raw, reactiveHandlers)
+  }
+
+  const state = reactive({
+    count: 0
+  })
+
+  watchEffect(() => {
+    console.log(state.count)
+  })
+
+  state.count++
+</script>

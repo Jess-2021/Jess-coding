@@ -44,7 +44,7 @@ var removeDuplicates = function(nums) {
     } else {
       i++
       j++
-    }
+    } 
   }
   return nums.length
 }

@@ -33,32 +33,8 @@ var twoSum3 = function (arr, target) {
   }
 }
 
-function twoSum(arr, target) {
-  let res = []
-  let map = new Map()
-  for(let i = 0; i < arr.length; i++) {
-    let current = map.get(target - arr[i])
-    if (current != null) {
-      return [current, i]
-    } else {
-      map.set(arr[i], i)
-    }
-  }
 
-  return res
-}
 
-function twoSum(arr, target) {
-  let res = []
-  for(let i = 0; i < arr.length - 1; i++) {
-    for(let j = i + 1; j < arr.length; j++) {
-      if (target - arr[i] === arr[j]) {
-        return [i, j]
-      }
-    }
-  }
-  return res
-}
 // Map方法的操作：
 // new Map([[arr[0], 0]])
 

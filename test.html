@@ -1,0 +1,9 @@
+<script>
+  const promise = new Promise((resolve, reject) => {
+  reject('失败');
+}).then().then().then(data=>{
+  console.log(data);
+},err=>{
+  console.log('err',err);
+})
+</script>

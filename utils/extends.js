@@ -8,12 +8,13 @@ Person.prototype.callName = function() {
 }
 function Child() {}
 
-// 1. 原型链继承：引用类型的属性和所有实例共享，不可传参
+// 1. 原型链继承：
+// 缺陷：引用类型的属性和所有实例共享，不可传参
 Child.prototype = new Person()
 var child1 = new Child()
 
 // 2. 构造函数继承：在子构造函数中，将this顺便绑定在Parent上，避免所有实例共享，可以传参
-// 方法都在构造函数上定义，每次创建实例都会创建一遍方法
+// 缺陷：方法都在构造函数上定义，每次创建实例都会创建一遍方法，无法继承父类原型上的属性方法
 function Child() {
   this.age = 17
   Person.call(this)
@@ -21,6 +22,7 @@ function Child() {
 var child1 = new Child()
 
 // 3. 组合继承：方法放原型上，属性放构造函数上
+// 会调用2次parent构造函数，第二次会重写instance的原型和constructor
 function Parent(name) {
   this.name = name
 }
@@ -32,32 +34,16 @@ function Child(age, name) {
   Parent.call(this, name)
 }
 Child.prototype = new Parent()
-Child.prototype.constructor = Child // 
-
-function Child(name, age) {
-  this.childName = name
-  Parent.call(this, age)
-}
-
-Child.prototype = new Parent()
-Child.prototype.constructor = Child
-
+Child.prototype.constructor = Child //
 
 var child2 = new Child(17, 'jarar')
 
-// 3. 寄生组合继承：Child.prototype = new Parent();会调用多一次Parent构造函数，导致Child.prototype和child1都有Colors属性；
+// 3. 寄生组合继承：Child.prototype = new Parent();
+// 会调用多一次Parent构造函数，导致Child.prototype和child1都有Colors属性；
 function extend(Child, Parent) {
   const F = function() {}
   F.prototype = Parent.prototype
   const instance =  new F()
-  instance.constructor = Child
-  Child.prototype = instance
-}
-
-function extend(Child, Parent) {
-  const F = function() {}
-  F.prototype = Parent.prototype
-  const instance = new F()
   instance.constructor = Child
   Child.prototype = instance
 }

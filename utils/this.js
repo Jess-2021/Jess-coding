@@ -11,14 +11,6 @@ Function.prototype.myCall = function(content) {
   return res // 有返回的值
 }
 
-Function.prototype.myCall = function(content) {
-  var content = content || window
-  content.fn = this
-  const res = content.fn([...arguments].slice(1))
-  delete content.fn
-
-  return res
-}
 /**
  * 改变this指向
  * 对函数进行调用

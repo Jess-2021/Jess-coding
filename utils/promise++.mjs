@@ -112,13 +112,13 @@ const resolveMidPromise = (promise, x, resolve, reject) => {
   }
 }
 
-// const promise = new Bromise((resolve, reject) => {
-//   reject('失败');
-// }).then().then().then(data=>{
-//   console.log(data);
-// },err=>{
-//   console.log('err',err);
-// })
+const promise = new Bromise((resolve, reject) => {
+  reject('失败');
+}).then().then().then(data=>{
+  console.log(data);
+},err=>{
+  console.log('err',err);
+})
 
 
 // let p1 = new Bromise((resolve, reject) => {

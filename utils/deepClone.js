@@ -7,6 +7,13 @@ function isObject(target) {
   return target !== null && (type === 'object' || type === 'function')
 }
 
+function clone(fn) {
+  let res = Object.create(null)
+  for(let i in target) {
+    res[i] = clone(target[i])
+  }
+}
+
 function getInit(target) {
   const C = target.constructor
   return C
