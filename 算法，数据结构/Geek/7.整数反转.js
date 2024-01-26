@@ -24,8 +24,25 @@ var reverse = function(x) {
   return res
 };
 
+
+var reverse = function(x) {
+    // 反转整数，取最后一位
+    // 中止条件 !0
+    // 当位数相等时，提前退出，判断末尾
+    // 2 ** 31 - 1 = 2147483647
+
+    let res = 0
+    while(x != 0) {
+        let tmp = x % 10
+        if (res > 214748364 || res > 2147483647 - tmp) return 0
+        if (res < -214748364 || res < -2147483648 + tmp) return 0
+        res = res * 10 + tmp
+        x = ~~(x / 10)
+    }
+
+    return res
+}
+
 console.log(reverse(123))
-
-
 // @lc code=end
 

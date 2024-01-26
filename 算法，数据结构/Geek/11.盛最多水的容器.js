@@ -22,9 +22,10 @@
 //   }
 //   return max;
 // };
+// 双指针代表的是 可以作为容器边界的所有位置的范围。
 var maxArea = function(height) {
   // 1. 两边夹逼，两边往中间夹击，操作时取的时比较短的边往中间夹
-  let max = Math.min(height[0], height[height.length-1]) * (height.length - 1);
+  let max = Math.min(height[0], height[height.length - 1]) * (height.length - 1);
   for (let i = 0, j = height.length - 1; i < j;) {
     height[i] > height[j] ? j-- : i++;
     max = Math.max(max, Math.min(height[i], height[j]) * (j-i))

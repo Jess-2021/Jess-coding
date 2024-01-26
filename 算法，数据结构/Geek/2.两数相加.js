@@ -41,5 +41,31 @@ function ListNode(val, next) {
   return res
 };
 
+var addTwoNumbers = function(l1, l2) {
+    // 逐一相加
+    // 进位处理，1变量
+    // 没有补0处理
+    // 输出数组
+    let res = null, carry = 0, temp = null
+
+    while(l1 || l2) {
+        let sum = (l1.val ?? 0) + (l2.val ?? 0) + carry
+        if (!res) {
+            res = temp = new ListNode(sum % 10)
+        } else {
+            temp.next = new ListNode(sum % 10)
+            temp = temp.next
+        }
+        l1 = l1?.next
+        l2 = l2?.next
+    }
+
+    if (carry) {
+        temp.next = new ListNode(carry)
+    }
+
+    return res
+}
+
 // @lc code=end
 

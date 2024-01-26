@@ -35,10 +35,12 @@ var lengthOfLongestSubstring = function(s) {
     // 除非在集合内之前已经存入了值
     left = map[i] >= left ? map[i] + 1 : left;
     map[i] = idx
-
+    console.log(map, left)
     return Math.max(max, idx - left + 1)
   }, 0)
 }
+
+
 
 console.log(lengthOfLongestSubstring("abcabcbb"))
 // @lc code=end
