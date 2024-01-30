@@ -33,27 +33,19 @@ var maxArea = function(height) {
   return max;
 };
 
-var maxArea1 = (arr) => {
-  let sum = 0;
-  for (let x = 0, y = arr.length - 1; x < y;) {
-    let res = Math.min(arr[x], arr[y]) * (y - x);
-    sum = Math.max(res, sum);
-    arr[x] > arr[y] ? y-- : x++;
-  }
-  return sum;
-}
-
-var maxArea = arr => {
-  let sum = 0
-  for(let m = 0, n = arr.length - 1; m < n;) {
-    let res = Math.min(arr[m], arr[n]) * (n - m)
-    sum = Math.max(res, sum)
-    arr[m] > arr[n] ? n-- : m++
-  }
-
-  return sum
-}
-
 console.log(maxArea([1,8,6,2,5,4,8,3,7]))
 // @lc code=end
 
+var maxArea = function(height) {
+    // 假设x < y 那么向左移动y得出的值一定会比不移动之前小，所以需要移动小边
+    let max = Math.min(height[0], height[height.length - 1]) * (height.length - 1);
+
+    for(let i = 0, j = height.length - 1; i < j;) {
+        height[i] < height[j] ? i++ : j--
+        max = Math.max(max, Math.min(height[i], height[j]) * (j - i))
+    }
+
+    return max
+}
+
+console.log(maxArea([1,1]))
