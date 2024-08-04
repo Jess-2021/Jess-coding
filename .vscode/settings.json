@@ -1,2 +1,6 @@
 {
+    "codeium.enableConfig": {
+        "*": true,
+        "codeium": "disabled",
+    },
 }

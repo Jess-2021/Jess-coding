@@ -33,10 +33,21 @@ var twoSum3 = function (arr, target) {
   }
 }
 
+var twoSum = function(nums, target) {
+    let m = new Map()
+    for(let i = 0; i < nums.length; i++) {
+        const it = m.get(target - nums[i])
+        if (it !== undefined) {
+            return [i, it]
+        } else {
+            m.set(nums[i], i)
+        }
+    }
+};
 
 
 // Map方法的操作：
 // new Map([[arr[0], 0]])
 
-console.log(twoSum([0,0, 3,3], 6))
+console.log(twoSum([2,7,11,15], 9))
 // @lc code=end

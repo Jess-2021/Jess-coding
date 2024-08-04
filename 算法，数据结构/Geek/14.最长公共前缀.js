@@ -25,19 +25,6 @@ var longestCommonPrefix = function(strs) {
   return strs[0].substring(0, low)
 };
 
-var validate = function(prefix, arr) {
-  let length = prefix.length
-  for(let i = 0; i < length; i++) {
-    const c = prefix.charAt(i)
-    for(let j = 0; j < arr.length; j++) {
-      if (arr[j].charAt(i) !== c) {
-        return false
-      }
-    }
-  }
-
-  return true
-}
 
 console.log(longestCommonPrefix(["f"]))
 // @lc code=end

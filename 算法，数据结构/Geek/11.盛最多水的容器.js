@@ -37,15 +37,14 @@ console.log(maxArea([1,8,6,2,5,4,8,3,7]))
 // @lc code=end
 
 var maxArea = function(height) {
-    // 假设x < y 那么向左移动y得出的值一定会比不移动之前小，所以需要移动小边
-    let max = Math.min(height[0], height[height.length - 1]) * (height.length - 1);
-
-    for(let i = 0, j = height.length - 1; i < j;) {
-        height[i] < height[j] ? i++ : j--
-        max = Math.max(max, Math.min(height[i], height[j]) * (j - i))
+    let max = 0, leng = height.length
+    for (let x = 0, y = leng - 1; x < y;) {
+        max = Math.max(max, Math.min(height[x], height[y]) * (y - x))
+        height[x] < height[y] ? x++ : y--
     }
 
     return max
 }
 
-console.log(maxArea([1,1]))
+
+console.log(maxArea([1,8,6,2,5,4,8,3,7]))

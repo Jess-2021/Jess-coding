@@ -26,20 +26,19 @@ var moveZeroes = function(nums) {
 };
 // 判断的标准是第二个指针
 
-var moveZeros = function(nums) {
-  let temp = 0, leng = nums.length
-  for(let i = 0; i < leng; i++) {
-    if (!nums[temp]) {
-      nums.splice(temp, 1)
-      nums.push(0)
-    } else {
-      temp++
-    }
-  }
-  return nums
-}
 
 var moveZeros = function(nums) {
+    let current = 0, leng = nums.length
+    for(let i = 0; i < leng; i++) {
+        if(nums[current] === 0) {
+            nums.splice(current, 1)
+            nums.push(0)
+        } else {
+            current++
+        }
+    }
+
+    return nums
 }
 console.log(moveZeros([0,0,0,1,0,3,12]))
 // @lc code=end
